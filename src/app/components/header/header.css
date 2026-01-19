@@ -1,0 +1,27 @@
+.navigation {
+    background-color: transparent;
+}
+
+.navigation.scrolled {
+    background-color: black;
+}
+
+.drop-down {
+    display: none;
+}
+
+.drop-down.show {
+    display: block;
+    position: absolute;
+    top: 105%;
+    left:0;
+    width: 100%;
+}
+
+.drop-down.show-all {
+    display: block;
+    position: relative;
+    top: 5%;
+    margin-bottom: 0.5em;
+}
+
