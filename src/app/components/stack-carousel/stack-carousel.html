@@ -1,8 +1,8 @@
-<div class="relative w-80 h-96 mx-auto perspective-1000">
+<div class="relative w-1/2 mx-auto perspective-1000 aspect-3/4">
     @for (img of images(); track img; let i = $index) {
     <div 
         [class]="getCardClasses(i, activeIndex())"
-        class="absolute inset-0 w-full h-full transition-all duration-500 ease-out shadow-2xl rounded-2xl border-4 border-cream bg-cream overflow-hidden origin-bottom"
+        class="absolute inset-0 w-full h-full transition-all duration-500 ease-out shadow-2xl border-15 border-cream bg-cream overflow-hidden origin-bottom"
     >
         <img 
         [ngSrc]="img"

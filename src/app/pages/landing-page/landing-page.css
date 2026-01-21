@@ -1,8 +1,21 @@
 .hero-section {
-    height: 100%;
     background-color: gray;
 }
 
-.story-content {
-    height: 50vh;
+.story .overlay.scrolled {
+    left: 0;
+}
+
+.overlay img.scrolled {
+    opacity: 100%;
+}
+
+#story.scrolled {
+    left: 100%;
+    opacity: 0;
+}
+
+#mission.scrolled {
+    left: 0;
+    opacity: 100%;
 }
