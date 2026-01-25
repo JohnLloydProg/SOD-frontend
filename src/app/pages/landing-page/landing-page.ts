@@ -2,10 +2,12 @@ import { Component, ElementRef, HostListener, signal, ViewChild } from '@angular
 import { StackCarousel } from '../../components/stack-carousel/stack-carousel';
 import { NgClass } from '@angular/common';
 import { SlideCarousel } from '../../components/slide-carousel/slide-carousel';
+import { ClassCard } from '../../components/class-card/class-card';
+import { Class } from '../../interfaces/class';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [StackCarousel, NgClass, SlideCarousel],
+  imports: [StackCarousel, NgClass, SlideCarousel, ClassCard],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.css',
 })
@@ -16,6 +18,53 @@ export class LandingPage {
   private scrollTimeout:any;
   public progress = 0;
   public progress2 = signal(0);
+  public classes: Class[] = [
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    },
+    {
+      name: "Kids Class",
+      img: "/images/class/kids_class.png",
+      description: "Teach your kids how to move their body!"
+    }
+  ]
 
   @HostListener('wheel')
   onWheel() {

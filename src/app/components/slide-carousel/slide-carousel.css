@@ -10,10 +10,10 @@
 
 @keyframes imgUp {
     from {transform: translateY(0);}
-    to {transform: translateY(-25%);}
+    to {transform: translateY(-8rem);}
 }
 @keyframes imgDown {
-    from {transform: translateY(-25%);}
+    from {transform: translateY(-8rem);}
     to {transform: translateY(0);}
 }
 

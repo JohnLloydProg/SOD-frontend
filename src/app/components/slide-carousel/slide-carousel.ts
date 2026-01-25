@@ -54,10 +54,23 @@ export class SlideCarousel implements OnInit, OnDestroy {
       this.animate();
     });
   }
+  
+  animate() {
+    this.currentScroll += ( (this.sectionScrollProgress()() - this.currentScroll) * 0.1);
 
-  @HostListener('wheel')
-  onWheel() {
-    console.log(this.sectionScrollProgress()());
+    // B. Performance Optimization
+    // If we are extremely close to the target (within 0.1px), just stop to save CPU.
+    const diff = Math.abs(this.sectionScrollProgress()() - this.currentScroll);
+    
+    if (diff > 0.05) {
+      // C. Update the DOM directly
+      // Note: We use translate3d to force Hardware Acceleration (GPU)
+      const el = this.moving().nativeElement;
+      
+      // Example: Moving horizontally based on vertical scroll
+      el.style.transform = `translateX(-${this.currentScroll * 1.1}%)`;
+    }
+
     const targetRect = this.targetZone().nativeElement.getBoundingClientRect();
     let foundActive = null;
 
@@ -76,23 +89,6 @@ export class SlideCarousel implements OnInit, OnDestroy {
 
     if (this.activeIndex() !== foundActive) {
       this.activeIndex.set(foundActive);
-    }
-  }
-
-  animate() {
-    this.currentScroll += ( (this.sectionScrollProgress()() - this.currentScroll) * 0.1);
-
-    // B. Performance Optimization
-    // If we are extremely close to the target (within 0.1px), just stop to save CPU.
-    const diff = Math.abs(this.sectionScrollProgress()() - this.currentScroll);
-    
-    if (diff > 0.05) {
-      // C. Update the DOM directly
-      // Note: We use translate3d to force Hardware Acceleration (GPU)
-      const el = this.moving().nativeElement;
-      
-      // Example: Moving horizontally based on vertical scroll
-      el.style.transform = `translateX(-${this.currentScroll * 1.1}%)`;
     }
 
     // D. Loop

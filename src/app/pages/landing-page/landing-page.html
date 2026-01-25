@@ -1,4 +1,4 @@
-<div class="hero-section relative">
+<div class="hero-section relative w-full">
 
     <img 
     class="absolute inset-0 h-screen object-cover w-full"
@@ -7,8 +7,8 @@
 
     <div class="absolute inset-0 bg-linear-to-t from-dark-violet from-75% to-[rgba(0,0,0,0.65)] h-full"></div>
 
-    <div class="intro px-15 flex relative z-10 h-screen">
-        <div class="flex w-full  my-auto">
+    <div class="intro flex relative px-15 z-10 h-screen w-full">
+        <div class="flex w-full my-auto">
             <div class="content w-7/10">
                 <h1 class="font-hanson font-extrabold text-6xl text-white">
                     WE DON'T JUST<br>TEACH <span class="text-gold">MOVEMENT,</span>
@@ -36,15 +36,15 @@
     </div>
 
     <div #track1 class="relative z-10 mt-25 h-[450vh]">
-        <div class="story z-10 mt-25 pb-10 h-screen sticky top-25 w-full">
-            <img src="/images/solid_violet_diamond.png" alt="violet diamond" class="absolute h-screen top-0 transform -translate-x-1/2">
-            <div class="overlay flex absolute z-40 left-[-100vw] transition-all duration-1000 ease-in-out" [ngClass]="{'scrolled': progress > 70}">
+        <div class="story z-10 pb-10 top-20 left-0 w-full h-[calc(100vh-5rem)] sticky overflow-hidden">
+            <img src="/images/solid_violet_diamond.png" alt="violet diamond" class="absolute h-full top-0 transform -translate-x-1/2">
+            <div class="overlay flex absolute z-40 left-[-100vw] transition-all duration-1000 ease-in-out h-full" [ngClass]="{'scrolled': progress > 70}">
                 <img 
                 src="/images/solid_violet_diamond.png" alt="violet translucent diamond" 
-                class="absolute h-screen top-0 left-[100vw] opacity-50 z-41 transform -translate-x-1/2 transition-opacity duration-200 ease-in-out" 
+                class="absolute h-[calc(100vh-5rem)] top-0 left-[100vw] opacity-50 z-41 transform -translate-x-1/2 transition-opacity duration-200 ease-in-out" 
                 [ngClass]="{'scrolled': progress > 70}"
                 >
-                <div class="flex h-screen w-screen bg-pink-violet relative z-45">
+                <div class="flex h-full w-screen bg-pink-violet relative z-45">
                     <img src="/images/gold_diamond.png" alt="gold diamon" class="absolute top-20 left-20 w-30">
                     <h2 class="text-white text-8xl font-bold text-center m-auto font-hanson">WE TEACH<br>WITH <span class="text-gold">HEART</span><br>AND LEAD BY<br><span class="text-gold">EXAMPLE</span>.</h2>
                     <img src="/images/gold_diamond.png" alt="gold diamon" class="absolute bottom-20 right-20 w-30">
@@ -92,40 +92,40 @@
         </div>
     </div>
     
-    <div class="relative z-10 bg-linear-to-b from-pink-violet from-35% to-violet h-full px-15 flex pb-30">
+    <div class="relative z-10 bg-linear-to-b from-pink-violet from-35% to-violet h-full flex pb-30">
         <div class="left w-full pb-15">
-            <div class="flex flex-col mt-20 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-20 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Creativity</h3>
-                <p class="text-white font-open-sans font-bold mt-3">To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage.</p>
             </div>
-            <div class="flex flex-col mt-30 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-30 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Community</h3>
-                <p class="text-white font-open-sans font-bold mt-3">We rise together as a family of movers.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We rise together as a family of movers.</p>
             </div>
-            <div class="flex flex-col mt-30 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-30 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Fun</h3>
-                <p class="text-white font-open-sans font-bold mt-3">We believe learning and growth should be joyful, energizing, and full of creative play.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We believe learning and growth should be joyful, energizing, and full of creative play.</p>
             </div>
         </div>
         <div class="divider border-l-white border-l-2"></div>
         <div class="right w-full pb-15">
-            <div class="flex flex-col mt-50 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-50 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Confidence</h3>
-                <p class="text-white font-open-sans font-bold mt-3">Every step forward builds self-belief.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">Every step forward builds self-belief.</p>
             </div>
-            <div class="flex flex-col mt-30 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-30 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Integrity</h3>
-                <p class="text-white font-open-sans font-bold mt-3">We move with honesty, respect, and authenticity — on and off the stage.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We move with honesty, respect, and authenticity — on and off the stage.</p>
             </div>
-            <div class="flex flex-col mt-30 w-1/2 mx-auto text-center">
+            <div class="flex flex-col mt-30 w-fit mx-auto text-center">
                 <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
                 <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Enthusiasm</h3>
-                <p class="text-white font-open-sans font-bold mt-3">We bring passion and positivity to every class, inspiring dancers to give their all and love the journey.</p>
+                <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We bring passion and positivity to every class, inspiring dancers to give their all and love the journey.</p>
             </div>
         </div>
         <img src="/images/large_gold_diamond.png" alt="gold diamond" class="absolute left-15 bottom-0 w-1/4 transform translate-y-1/2">
@@ -134,13 +134,41 @@
     <img src="/images/buffer_image.png" alt="coaches" class="relative z-10">
 
     <div #track2 class="relative z-10 mt-25 h-[400vh]">
-        <div class="z-10 bg-linear-to-b from-dark-violet to-black w-full sticky top-25">
+        <div class="z-10 bg-linear-to-b from-dark-violet to-black w-full sticky top-20 h-[calc(100vh-5rem)]">
             <div class="flex px-15 mt-15">
-                <h2 class="font-hanson font-bold text-5xl text-gold mt-auto mb-auto mx-10 w-140">Coaches</h2>
+                <h2 class="font-hanson font-bold text-5xl text-gold mt-auto mb-auto mx-10 w-110">Coaches</h2>
                 <hr class="w-full bg-white rounded-xs h-0.75 my-auto">
                 <img src="/images/diamond.png" alt="diamond" class="w-15 -translate-x-1">
             </div>
             <app-slide-carousel [sectionScrollProgress]="progress2"></app-slide-carousel>
         </div>
+    </div>
+
+    <div class="classes relative z-10 w-full bg-black pt-15 pb-15">
+        <div class="flex px-15">
+            <h2 class="font-hanson font-bold text-5xl text-gold mt-auto mb-auto mx-10 w-110">Classes</h2>
+            <hr class="w-full bg-white rounded-xs h-0.75 my-auto">
+            <img src="/images/diamond.png" alt="diamond" class="w-15 -translate-x-1">
+        </div>
+
+        <h3 class="font-hanson font-bold text-center text-white text-4xl mt-5">Types of Classes</h3>
+
+        <div class="flex flex-wrap mt-15 justify-center w-2/3 mx-auto">
+            @for (class of classes; track class; let i = $index) {
+                <app-class-card [class]="class"></app-class-card>
+            }
+        </div>
+
+        <h5 class="text-white text-3xl font-bold text-center mb-10">Book now to see available schedules</h5>
+        <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-45 bg-linear-to-r from-gold to-pink-violet mx-auto block cursor-pointer">BOOK A CLASS</button>
+    </div>
+
+    <div class="underground h-screen bg-[url('/images/project_underground/background.png')] bg-cover relative z-10 w-full">
+        <div class="absolute top-1/2 left-15 transform -translate-y-1/2 w-1/2">
+            <img src="/images/project_underground/logo.png" alt="project undeground" class="w-full">
+            <h5 class="text-center font-hanson font-bold text-white text-4xl mt-20">Limited Slots Only!</h5>
+            <button class="block mx-auto font-eurostile font-bold text-2xl bg-linear-to-r from-light-neon to-neon cursor-pointer p-3 rounded-full border-2 border-black w-80 mt-7">REGISTER NOW</button>
+        </div>
+        <img src="/images/project_underground/border.png" alt="border" class="absolute h-4/5 right-15 top-1/2 -translate-y-1/2">
     </div>
 </div>
