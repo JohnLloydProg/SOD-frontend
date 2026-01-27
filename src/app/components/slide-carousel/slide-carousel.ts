@@ -1,10 +1,11 @@
 import { Component, ElementRef, HostListener, inject, input, NgZone, OnDestroy, OnInit, Signal, signal, viewChild, viewChildren } from '@angular/core';
 import { Coach } from '../../interfaces/coach';
 import { NgClass } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-slide-carousel',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './slide-carousel.html',
   styleUrl: './slide-carousel.css',
 })

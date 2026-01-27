@@ -1,5 +1,5 @@
 <div class="h-full pt-20 flex bg-amber-50">
-    <img src="{{images[current_displayed()]}}" alt="event poster" class="w-1/3 m-auto">
+    <img src="{{images[current_displayed()]}}" alt="event poster" class="h-full">
     <div class="flex flex-col w-2/3 h-full p-10">
         <div #event class="event flex flex-col w-full m-auto">
             <div class="flex w-full">
@@ -126,7 +126,7 @@
     <div class="flex w-full mt-20">
         <div class="left w-1/2 relative" [matTooltip]="'Click to view performance'" (mouseenter)="playVideo(0)" (mouseleave)="pauseVideo(0)">
             <a href="https://www.facebook.com/reel/1266975665446247" target="_blank">
-                <video #videoPlayer1 loop class="absolute inset-0 object-cover hidden w-full h-full rounded-l-full" [ngClass]="{'show':showVideo[0]}">
+                <video #videoPlayer1 [muted]="'mute'" loop class="absolute inset-0 object-cover hidden w-full h-full rounded-l-full" [ngClass]="{'show':showVideo[0]}">
                     <source src="/videos/event_profiles/philippine_fashion_week.mp4" type="video/mp4">
                 </video>
                 <img src="/images/event_profiles/philippine_fashion_week_event.jpg" alt="philippine fashion week" class="w-full rounded-l-full z-10">
@@ -149,7 +149,7 @@
         </div>
         <div class="right w-1/2 relative" [matTooltip]="'Click to view performance'" (mouseenter)="playVideo(1)" (mouseleave)="pauseVideo(1)">
             <a href="https://www.facebook.com/reel/1498700931217570" target="_blank">
-                <video #videoPlayer2 loop class="absolute inset-0 object-cover hidden w-full h-full rounded-r-full" [ngClass]="{'show':showVideo[1]}">
+                <video #videoPlayer2 [muted]="'mute'" loop class="absolute inset-0 object-cover hidden w-full h-full rounded-r-full" [ngClass]="{'show':showVideo[1]}">
                     <source src="/videos/event_profiles/medical_city.mp4" type="video/mp4">
                 </video>
                 <img src="/images/event_profiles/medical_city_event.jpg" alt="philippine fashion week" class="w-full rounded-r-full">
@@ -159,7 +159,7 @@
     <div class="flex w-full">
         <div class="left w-1/2 relative" [matTooltip]="'Click to view performance'" (mouseenter)="playVideo(2)" (mouseleave)="pauseVideo(2)">
             <a href="https://www.facebook.com/watch/?v=415953824343707" target="_blank">
-                <video #videoPlayer3 loop class="absolute inset-0 object-cover hidden w-full h-full rounded-l-full" [ngClass]="{'show':showVideo[2]}">
+                <video #videoPlayer3 [muted]="'mute'" loop class="absolute inset-0 object-cover hidden w-full h-full rounded-l-full" [ngClass]="{'show':showVideo[2]}">
                     <source src="/videos/event_profiles/cebuana_lhuillier.mp4" type="video/mp4">
                 </video>
                 <img src="/images/event_profiles/cebuana_lhuillier_event.jpg" alt="philippine fashion week" class="w-full rounded-l-full">
@@ -181,7 +181,7 @@
         </div>
         <div class="right w-1/2 relative" [matTooltip]="'Click to view performance'" (mouseenter)="playVideo(3)" (mouseleave)="pauseVideo(3)">
             <a href="https://www.facebook.com/watch/?v=1277134380360943&rdid=xyNay0CnPyHl2DMk" target="_blank">
-                <video #videoPlayer4 loop class="absolute inset-0 object-cover hidden w-full h-full rounded-r-full" [ngClass]="{'show':showVideo[3]}">
+                <video #videoPlayer4 [muted]="'mute'" loop class="absolute inset-0 object-cover hidden w-full h-full rounded-r-full" [ngClass]="{'show':showVideo[3]}">
                     <source src="/videos/event_profiles/18th_birthday.mp4" type="video/mp4">
                 </video>
                 <img src="/images/event_profiles/18th_birthday_event.jpg" alt="philippine fashion week" class="w-full rounded-r-full">

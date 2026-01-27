@@ -1,6 +1,6 @@
 <div #my_header class="navigation fixed w-full p-5 z-20" [ngClass]="{'scrolled': isScrolled || getCurrentPath().length > 2}">
     <div class="flex mx-5 justify-between">
-        <div class="flex flex-col w-fit">
+        <div class="flex flex-col w-fit my-auto">
             <a routerLink="/"><img src="/images/header_logo.png" alt="SOD-Brand-Logo" class="w-70"></a>
             <p class="drop-down h-full w-80 text-white mt-5 text-justify font-open-sans text-sm", [ngClass]="{'show-all':show_all()}">
                 At State of Dance, we don’t just teach choreography; we shape character, build confidence, and celebrate the elegance of transformation. We don’t just teach movement—we inspire transformation.
@@ -30,7 +30,7 @@
                         <li class="p-0.5 link">Events History</li>
                     </ul>
                 </div>
-                <p class="font-eurostile text-white font-bold text-base p-2 ml-3 w-35 my-auto cursor-pointer">MERCH</p>
+                <a routerLink="/merch"><p class="font-eurostile text-white font-bold text-base p-2 ml-3 w-35 my-auto cursor-pointer">MERCH</p></a>
                 
             </div>
             <div class="flex">
@@ -41,7 +41,7 @@
                         <li class="p-0.5 link">Rent our Studio</li>
                     </ul>
                 </div>
-                <button class="font-eurostile text-white font-bold text-lg p-1 w-11 h-11 cursor-pointer ml-5 border border-white text-center" (click)="extendHeader()">x</button>
+                <button class="font-eurostile text-white font-bold text-lg p-1 w-11 h-11 cursor-pointer ml-5" (click)="extendHeader()"><img src="/images/drawer_icon.png" alt="drawer icon" class="w-full"></button>
             </div>
         </div>
     </div>
