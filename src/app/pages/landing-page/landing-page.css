@@ -19,3 +19,15 @@
     left: 0;
     opacity: 100%;
 }
+
+.line {
+    animation-name: moveline;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveline {
+    from {height: 0%;}
+    to {height: 100%;}
+}

@@ -4,7 +4,7 @@
         <source src="/videos/intro_background.mp4" type="video/mp4">
     </video>
 
-    <div class="absolute opacity-70 inset-0 bg-linear-to-t from-black from-25% to-[rgba(0,0,0,0.8)] h-full"></div>
+    <div class="absolute opacity-70 inset-0 bg-linear-to-t bg-black h-full"></div>
 
     <div class="intro flex relative px-15 z-10 h-screen w-full">
         <div class="flex w-full my-auto">
@@ -23,8 +23,8 @@
                     <p class="mt-4">At SOD, movement meets meaning — and every step creates a story.</p>
                 </div>
                 <div class="flex mt-10">
-                    <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-45 bg-linear-to-r from-gold to-violet">BOOK A CLASS</button>
-                    <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-65 ml-10 bg-linear-to-r from-violet to-gold">PROJECT UNDERGROUND</button>
+                    <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-45 bg-linear-to-r from-gold to-violet cursor-pointer">BOOK A CLASS</button>
+                    <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-65 ml-10 bg-linear-to-r from-violet to-gold cursor-pointer" (click)="projectUnderground()">PROJECT UNDERGROUND</button>
                 </div>
             </div>
             <img 
@@ -35,105 +35,111 @@
     </div>
 </div>
 
-<div #track1 class="relative z-10 pt-15 h-[450vh] bg-dark-violet">
-    <div class="story z-10 pb-10 top-20 left-0 w-full h-[calc(100vh-5rem)] sticky overflow-hidden">
-        <img src="/images/solid_violet_diamond.png" alt="violet diamond" class="absolute h-full top-0 transform -translate-x-1/2">
-        <div class="overlay flex absolute z-40 left-[-100vw] transition-all duration-1000 ease-in-out h-full" [ngClass]="{'scrolled': progress > 70}">
-            <img 
-            src="/images/solid_violet_diamond.png" alt="violet translucent diamond" 
-            class="absolute h-[calc(100vh-5rem)] top-0 left-[100vw] opacity-50 z-41 transform -translate-x-1/2 transition-opacity duration-200 ease-in-out" 
-            [ngClass]="{'scrolled': progress > 70}"
-            >
-            <div class="flex h-full w-screen bg-pink-violet relative z-45">
-                <img src="/images/gold_diamond.png" alt="gold diamon" class="absolute top-20 left-20 w-30">
-                <h2 class="text-white text-8xl font-bold text-center m-auto font-hanson">WE TEACH<br>WITH <span class="text-gold">HEART</span><br>AND LEAD BY<br><span class="text-gold">EXAMPLE</span>.</h2>
-                <img src="/images/gold_diamond.png" alt="gold diamon" class="absolute bottom-20 right-20 w-30">
-            </div>
-            
-        </div>
-        <div class="flex px-15">
-            <h2 class="font-hanson font-bold text-5xl text-white mt-auto mb-auto mx-10 w-140">Our <span class="text-gold">Story</span></h2>
-            <hr class="w-full bg-white rounded-xs h-0.75 my-auto">
-            <img src="/images/diamond.png" alt="diamond" class="w-15 -translate-x-1">
-        </div>
-        <div class="flex px-15 h-full">
-            <app-stack-carousel 
-            class="block w-6/10 my-auto"
-            [images]="['/images/carousel/image_1.jpg', '/images/carousel/image_2.jpg', '/images/carousel/image_3.jpg', '/images/carousel/image_4.jpg', '/images/carousel/image_5.jpg']"
-            ></app-stack-carousel>
-            <div class="flex flex-col w-4/10 px-15 mr-5">
-                <img src="/images/SOD_Logo_FA-16.png" alt="SOD_Logo">
-                <hr class="w-30 bg-white rounded-xs h-1 mx-auto">
-                <div class="story-content mt-5 p-2 text-white relative h-full overflow-hidden">
-                    <div id="story" class="absolute w-full top-0 left-0 text-center transition-all duration-500 ease-in-out" [ngClass]="{'scrolled': progress > 35}">
-                        <p class="font-open-san text-base">
-                            A premier dance institution founded on passion, artistry, and excellence. Established by renowned dancer and choreographer Kervin Mendiola, the studio began as a vision to create a space where dancers of all ages could express themselves, grow with confidence, and find purpose through movement.
-                        </p>
-                        <p class="font-open-sans text-base my-10">
-                            From its humble beginnings to its elegant studios in Quezon City, BGC, and Manila, State of Dance has become a home for aspiring and professional dancers alike. We offer dance classes for kids, teens, and adults, private training, recital programs, studio rentals, and professional performance services for corporate and special events.
-                        </p>
-                        <p class="font-open-sans text-base">
-                            Each class and performance is crafted to go beyond technique — cultivating artistry, discipline, and self-expression. At State of Dance, we don’t just teach choreography; we shape character, build confidence, and celebrate the elegance of transformation.
-                        </p>
-                    </div>
-                    <div id="mission" class="absolute w-full top-0 text-center opacity-0 -left-full transition-all duration-500 ease-in-out" [ngClass]="{'scrolled': progress > 35}">
-                        <h4 class="font-hanson font-bold text-3xl text-violet mb-5 mt-10">Mission</h4>
-                        <p class="font-open-san text-base">
-                            To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage. 
-                        </p>
-                        <h4 class="font-hanson font-bold text-3xl text-violet mb-5 mt-10">Vision</h4>
-                        <p class="font-open-sans text-base">
-                            To be one of the most well-known and respected names in the dance industry by 2028, recognized for excellence, artistry, and community impact. 
-                        </p>
-                    </div>
-                </div>
+<div class="story py-15  w-full h-fit bg-linear-to-b from-black to to-dark-violet">
+    <div class="flex px-15">
+        <h2 class="font-hanson font-bold text-5xl text-white mt-auto mb-auto mx-10 w-140">Our <span class="text-gold">Story</span></h2>
+        <hr class="w-full bg-white rounded-xs h-0.75 my-auto">
+        <img src="/images/diamond.png" alt="diamond" class="w-15 -translate-x-1">
+    </div>
+    <div class="flex px-15 h-full">
+        <app-stack-carousel 
+        class="block w-1/2 my-auto"
+        [images]="['/images/carousel/image_1.jpg', '/images/carousel/image_2.jpg', '/images/carousel/image_3.jpg', '/images/carousel/image_4.jpg', '/images/carousel/image_5.jpg']"
+        ></app-stack-carousel>
+        <div class="flex flex-col w-1/2 px-15 mr-5 h-full">
+            <img src="/images/SOD_Logo_FA-16.png" alt="SOD_Logo" class="w-7/10 mx-auto">
+            <hr class="w-30 bg-white rounded-xs h-1 mx-auto">
+            <div class="story-content mt-5 p-2 text-white text-center  w-full">
+                <p class="font-open-san text-base">
+                    A premier dance institution founded on passion, artistry, and excellence. Established by renowned dancer and choreographer Kervin Mendiola, the studio began as a vision to create a space where dancers of all ages could express themselves, grow with confidence, and find purpose through movement.
+                </p>
+                <p class="font-open-sans text-base my-10">
+                    From its humble beginnings to its elegant studios in Quezon City, BGC, and Manila, State of Dance has become a home for aspiring and professional dancers alike. We offer dance classes for kids, teens, and adults, private training, recital programs, studio rentals, and professional performance services for corporate and special events.
+                </p>
+                <p class="font-open-sans text-base">
+                    Each class and performance is crafted to go beyond technique — cultivating artistry, discipline, and self-expression. At State of Dance, we don’t just teach choreography; we shape character, build confidence, and celebrate the elegance of transformation.
+                </p>
+
+                <h4 class="font-hanson font-bold text-4xl text-violet mb-5 mt-10">Mission</h4>
+                <p class="font-open-san text-base">
+                    To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage. 
+                </p>
+                <h4 class="font-hanson font-bold text-4xl text-violet mb-5 mt-10">Vision</h4>
+                <p class="font-open-sans text-base">
+                    To be one of the most well-known and respected names in the dance industry by 2028, recognized for excellence, artistry, and community impact. 
+                </p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="relative z-10 bg-linear-to-b from-pink-violet from-35% to-violet h-fit flex pb-30">
-    <div class="left w-full pb-15">
-        <div class="flex flex-col mt-20 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Creativity</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage.</p>
-        </div>
-        <div class="flex flex-col mt-30 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Community</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We rise together as a family of movers.</p>
-        </div>
-        <div class="flex flex-col mt-30 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Fun</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We believe learning and growth should be joyful, energizing, and full of creative play.</p>
+ 
+
+<div class="bg-dark-violet h-fit pb-30 flex">
+   <div class="flex flex-col h-fit w-full my-auto">
+        <div class="w-fit m-auto">
+            <img src="/images/gold_diamond.png" alt="gold diamon" class="w-20 mb-15">
+            <h2 class="text-white text-6xl ml-10 font-bold font-hanson w-140">WE TEACH<br>WITH <span class="text-gold">HEART</span><br>AND LEAD BY<br><span class="text-gold">EXAMPLE</span>.</h2>
+            <div class="flex mt-15">
+                <img src="/images/gold_diamond.png" alt="gold diamon" class="w-20 mb-auto">
+                <img src="/images/gold_diamond.png" alt="gold diamon" class="w-30 mt-5">
+            </div>
         </div>
     </div>
-    <div class="divider border-l-white border-l-2"></div>
-    <div class="right w-full pb-15">
-        <div class="flex flex-col mt-50 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Confidence</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">Every step forward builds self-belief.</p>
+    <div class="w-full">
+        <div class="flex w-fit my-5 relative">
+            <div #line class="absolute divider border-l-white border-l-2 h-0 left-4.75 top-6.5"></div>
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Creativity</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">To build confidence through the art of dance, empowering individuals to express their true selves both on and off the stage.</p>
+            </div>
         </div>
-        <div class="flex flex-col mt-30 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Integrity</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We move with honesty, respect, and authenticity — on and off the stage.</p>
+        <div class="flex w-fit my-5 relative">
+            <div #line class="absolute divider border-l-white border-l-2 h-0 left-4.75 top-6.5"></div>
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Community</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">We rise together as a family of movers.</p>
+            </div>
         </div>
-        <div class="flex flex-col mt-30 w-fit mx-auto text-center">
-            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-15 mx-auto">
-            <h3 class="font-eurostile text-gold text-6xl font-extrabold mt-5">Enthusiasm</h3>
-            <p class="text-white font-open-sans font-bold mt-3 w-110 mx-auto">We bring passion and positivity to every class, inspiring dancers to give their all and love the journey.</p>
+        <div class="flex w-fit my-5 relative">
+            <div #line class="absolute divider border-l-white border-l-2 h-0 left-4.75 top-6.5"></div>
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Fun</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">We believe learning and growth should be joyful, energizing, and full of creative play.</p>
+            </div>
+        </div>
+        <div class="flex w-fit my-5 relative">
+            <div #line class="absolute divider border-l-white border-l-2 h-0 left-4.75 top-6.5"></div>
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Confidence</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">Every step forward builds self-belief.</p>
+            </div>
+        </div>
+        <div class="flex w-fit my-5 relative">
+            <div #line class="absolute divider border-l-white border-l-2 h-0 left-4.75 top-6.5"></div>
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Integrity</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">We move with honesty, respect, and authenticity — on and off the stage.</p>
+            </div>
+        </div>
+        <div class="flex w-fit my-5">
+            <img src="/images/gold_diamond.png" alt="gold diamong" class="w-10 mb-auto mr-5 z-10">
+            <div #content class="flex flex-col transition-all duration-500 ease-in-out opacity-0 pl-10">
+                <h3 class="font-eurostile text-gold text-4xl font-extrabold">Enthusiasm</h3>
+                <p class="text-white font-open-sans font-bold mt-3 w-100">We bring passion and positivity to every class, inspiring dancers to give their all and love the journey.</p>
+            </div>
         </div>
     </div>
-    <img src="/images/large_gold_diamond.png" alt="gold diamond" class="absolute left-15 bottom-0 w-1/4 transform translate-y-1/2">
 </div>
 
 <img src="/images/buffer_image.png" alt="coaches" class="relative z-10">
 
-<div #track2 class="relative z-10 h-[400vh]">
+<div #track2 class="relative z-10 h-[600vh]">
     <div class="z-10 pt-10 bg-linear-to-b from-dark-violet to-black w-full sticky top-20 h-[calc(100vh-5rem)]">
         <div class="flex px-15">
             <h2 class="font-hanson font-bold text-5xl text-gold mt-auto mb-auto mx-10 w-110">Coaches</h2>
@@ -163,7 +169,7 @@
     <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-45 bg-linear-to-r from-gold to-pink-violet mx-auto block cursor-pointer">BOOK A CLASS</button>
 </div>
 
-<div class="underground h-screen bg-[url('/images/project_underground/background.png')] bg-cover relative z-10 w-full">
+<div #underground class="underground h-screen bg-[url('/images/project_underground/background.png')] bg-cover relative z-10 w-full">
     <div class="absolute top-1/2 left-15 transform -translate-y-1/2 w-1/2">
         <img src="/images/project_underground/logo.png" alt="project undeground" class="w-full">
         <h5 class="text-center font-hanson font-bold text-white text-4xl mt-20">Limited Slots Only!</h5>
