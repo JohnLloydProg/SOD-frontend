@@ -1,12 +1,25 @@
 
 <div class="min-h-screen pt-35 px-15 bg-black flex">
-    <div class="flex flex-col sticky w-120 mr-auto top-30 left-0 h-fit">
+    <div class="flex flex-col sticky w-120 mr-5 top-30 left-0 h-fit">
         <h1 class="font-hanson text-white font-bold text-6xl">Rent our <span class="text-gold">Studio</span></h1>
         <p class="font-lexend text-white text-base my-5">Your space to move, create, and inspire.</p>
-        <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-4/5 bg-linear-to-r from-gold to-violet uppercase">PROCEED TO PAYMENT</button>
+        <div class="flex flex-col w-full mr-5">
+            <input #date type="date" name="date" class="text-white border border-white p-2 rounded-lg text-xl [&::-webkit-calendar-picker-indicator]:invert" (change)="selectDate(date.value)" [min]="today.toISOString().slice(0, 10)">
+            <select #startTime name="start" id="start" class="text-white border border-white p-2 rounded-lg text-xl my-5" (click)="selectStartTime(startTime.value)">
+                @for (time of start_times.slice(0, -2); track $index) {
+                    <option value="{{$index}}" class="bg-black">{{time}}</option>
+                }
+            </select>
+            <select #endTime name="end" id="end" class="text-white border border-white p-2 rounded-lg text-xl" (click)="selectEndTime(endTime.value)">
+                @for (time of end_times.slice(2); track $index) {
+                    <option value="{{time}}" class="bg-black">{{time}}</option>
+                }
+            </select>
+        </div>
+        <button class="mt-10 font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-full bg-linear-to-r from-gold to-violet uppercase">PROCEED TO PAYMENT</button>
     </div>
     <div class="flex flex-col w-full">
-        <div class="flex flex-wrap bg-amber-50 p-5 w-full" (click)="selected_branch.set('quezon')">
+        <div class="flex flex-wrap bg-amber-50 p-5 w-full border-12 border-black" (click)="selected_branch.set('quezon')" [ngClass]="{'border-gold':selected_branch()=='quezon'}">
             <div class="relative w-1/2 m-auto mb-5 xl:h-full xl:m-0">
                 <img 
                 src="/images/next_circular_button.png" alt="next circular" 
@@ -51,7 +64,7 @@
                 <p class="text-black font-lexend text-base text-center mt-5">A very attractive space where you can take your performance to another level</p>
             </div>
         </div>
-        <div class="flex flex-wrap-reverse bg-amber-50 p-5 mt-10 w-full" (click)="selected_branch.set('binondo')">
+        <div class="flex flex-wrap-reverse bg-amber-50 p-5 mt-10 w-full border-12 border-black" (click)="selected_branch.set('binondo')" [ngClass]="{'border-gold':selected_branch()=='binondo'}">
             <div class="flex flex-col m-auto w-[24rem]">
                 <h2 class="text-black font-lexend text-3xl font-bold uppercase text-center">Binondo Manila</h2>
                 <div class="flex justify-center">
@@ -116,24 +129,6 @@
                 (click)="next('binondo')"
                 >
             </div>
-        </div>
-        <div class="flex mt-10">
-            <div class="flex flex-col w-full mr-5">
-                <input #date type="date" name="date" class="text-white border border-white p-2 rounded-lg text-xl [&::-webkit-calendar-picker-indicator]:invert" (change)="selectDate(date.value)" [min]="today.toISOString().slice(0, 10)">
-                <select #startTime name="start" id="start" class="text-white border border-white p-2 rounded-lg text-xl my-auto" (click)="selectStartTime(startTime.value)">
-                    @for (time of start_times.slice(0, -2); track $index) {
-                        <option value="{{$index}}" class="bg-black">{{time}}</option>
-                    }
-                </select>
-                <select #endTime name="end" id="end" class="text-white border border-white p-2 rounded-lg text-xl" (click)="selectEndTime(endTime.value)">
-                    @for (time of end_times.slice(2); track $index) {
-                        <option value="{{time}}" class="bg-black">{{time}}</option>
-                    }
-                </select>
-            </div>
-            <button class="w-50">
-                <img src="/images/studio/book_btn.png" alt="book btn" class="w-full h-full">
-            </button>
         </div>
     </div>
 </div>

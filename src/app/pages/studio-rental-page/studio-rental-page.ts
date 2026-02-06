@@ -1,8 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { NgClass } from "@angular/common";
 
 @Component({
   selector: 'app-studio-rental-page',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './studio-rental-page.html',
   styleUrl: './studio-rental-page.css',
 })

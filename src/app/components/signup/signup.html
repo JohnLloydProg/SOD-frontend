@@ -1,0 +1,63 @@
+<div class="flex flex-col w-full h-full p-5 bg-black text-white">
+    <img src="/images/SOD_Logo_FA-21.png" alt="Stage of Dance Logo" class="w-25 my-5  mx-auto">
+    <h2 class="font-hanson text-white font-bold text-4xl text-center">Sign Up</h2>
+    <input type="email" name="email" id="email" placeholder="Email" class="mt-10 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
+    <div class="flex mt-5 p-2 w-full " [ngClass]="{'border-gold':password_focused(), 'border-white':!password_focused(), 'border-2':password_focused(), 'border':!password_focused()}">
+        <input #password [type]="this.visible ? 'text':'password'" name="password" 
+        id="password" placeholder="Password" class="text-white w-full font-open-sans focus:outline-none focus:ring-0 focus:border-none"
+        (focus)="password_focused.set(true)" (blur)="password_focused.set(false)"
+        >
+        <img src="{{password_icon()}}" alt="show password" class="w-5 ml-2 my-auto cursor-pointer" (click)="togglePasswordVisibility()">
+    </div>
+    <div class="flex mt-5 p-2 w-full " [ngClass]="{'border-gold':confirm_focused(), 'border-white':!confirm_focused(), 'border-2':confirm_focused(), 'border':!confirm_focused()}">
+        <input #password [type]="this.visible ? 'text':'password'" name="confirm_password" 
+        id="confirm_password" placeholder="Confirm Password" class="text-white w-full font-open-sans focus:outline-none focus:ring-0 focus:border-none"
+        (focus)="confirm_focused.set(true)" (blur)="confirm_focused.set(false)"
+        >
+        <img src="{{password_icon()}}" alt="show password" class="w-5 ml-2 my-auto cursor-pointer" (click)="togglePasswordVisibility()">
+    </div>
+    <label class="flex items-center gap-3 cursor-pointer group mt-5">
+        <input type="checkbox" class="peer sr-only" />
+
+        <div class="
+            relative flex items-center justify-center
+            w-3.5 h-3.5
+            border border-white bg-transparent
+            peer-checked:bg-white peer-checked:border-white
+            transition-all duration-200
+        ">
+            
+            <svg 
+            class="w-3 h-3 opacity-100" 
+            fill="none" viewBox="0 0 24 24" stroke="#000000" stroke-width="3"
+            >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            
+        </div>
+        <p class="font-lexend text-xs text-white">I agree to the <a href="#" class="font-bold text-gold">Terms of Use</a></p>
+    </label>
+    <label class="flex items-center gap-3 cursor-pointer group mt-3">
+        <input type="checkbox" class="peer sr-only" />
+
+        <div class="
+            relative flex items-center justify-center
+            w-3.5 h-3.5
+            border border-white bg-transparent
+            peer-checked:bg-white peer-checked:border-white
+            transition-all duration-200
+        ">
+            
+            <svg 
+            class="w-3 h-3 opacity-100" 
+            fill="none" viewBox="0 0 24 24" stroke="#000000" stroke-width="3"
+            >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            
+        </div>
+        <p class="font-lexend text-xs text-white">I agree to the <a href="#" class="font-bold text-gold">Privacy Policy</a></p>
+    </label>
+    <button class="font-eurostile font-bold text-black text-xl rounded-full bg-white uppercase py-2 mt-10">Sign Up</button>
+    <p class="font-lexend text-xs text-white text-center mt-5">Already have an account? <a [routerLink]="['', {outlets: {sidebar:['login']}}]" class="font-bold text-gold">Login</a></p>
+</div>

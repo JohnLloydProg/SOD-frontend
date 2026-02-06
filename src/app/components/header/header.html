@@ -1,4 +1,4 @@
-<div #my_header class="navigation fixed w-full p-5 z-20" [ngClass]="{'scrolled': isScrolled || getCurrentPath().length > 2}">
+<div #my_header class="navigation fixed w-full p-5 z-60" [ngClass]="{'scrolled': isScrolled || getCurrentPath().length > 2}">
     <div class="flex mx-5 justify-between">
         <div class="flex flex-col w-fit my-auto">
             <a routerLink="/"><img src="/images/header_logo.png" alt="SOD-Brand-Logo" class="w-70"></a>
@@ -14,34 +14,47 @@
                         <img src="/images/drop-down_icon.png" alt="drop down" class="w-2.5" [ngClass]="{'show': classes_show(), 'show-all': show_all()}">
                     </div>
                     <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':classes_show(), 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all()}">
-                        <a routerLink="/" fragment="types-classes"><li class="p-0.5 link">Types of Classes</li></a>
+                        <a routerLink="/" fragment="types-classes"><li class="p-0.5 link" (click)="hideAll()">Types of Classes</li></a>
                         <li class="p-0.5 link">Class Schedule</li>
-                        <a routerLink="/" fragment="project-underground"><li class="p-0.5 link">Project Underground</li></a>
+                        <a routerLink="/" fragment="project-underground"><li class="p-0.5 link" (click)="hideAll()">Project Underground</li></a>
                     </ul>
                 </div>
-                <a routerLink="/coaches"><p class="font-eurostile text-white font-bold text-base p-2 mx-3 w-35">COACHES</p></a>
+                <a routerLink="/coaches"><p class="font-eurostile text-white font-bold text-base p-2 mx-3 w-35" (click)="hideAll()">COACHES</p></a>
                 <div class="flex flex-col mx-3 w-35 relative text-white h-full">
                     <div class="flex cursor-pointer items-center h-11" (click)="events_show.set(!events_show())">
                         <p class="font-eurostile font-bold text-base p-2 my-auto">EVENTS</p>
                         <img src="/images/drop-down_icon.png" alt="drop down" class="w-2.5" [ngClass]="{'show': events_show(), 'show-all': show_all()}">
                     </div>
                     <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':events_show(), 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all()}">
-                        <a routerLink="/events"><li class="p-0.5 link">Dancer Events Profile</li></a>
+                        <a routerLink="/events"><li class="p-0.5 link" (click)="hideAll()">Dancer Events Profile</li></a>
                         <li class="p-0.5 link">Events History</li>
                     </ul>
                 </div>
-                <a routerLink="/merch"><p class="font-eurostile text-white font-bold text-base p-2 ml-3 w-35 cursor-pointer">MERCH</p></a>
+                <a routerLink="/merch"><p class="font-eurostile text-white font-bold text-base p-2 ml-3 w-35 cursor-pointer" (click)="hideAll()">MERCH</p></a>
                 
             </div>
             <div class="flex">
                 <div class="flex flex-col w-fit relative text-white">
                     <button class="font-eurostile font-bold text-base p-1 border border-white w-35 h-11 cursor-pointer" (click)="bookings_show.set(!bookings_show())">BOOKING</button>
                     <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':bookings_show(), 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all()}">
-                        <a routerLink="/class-booking"><li class="p-0.5 link">Book a Class</li></a>
-                        <a routerLink="/studio-rental"><li class="p-0.5 link">Rent our Studio</li></a>
+                        <a routerLink="/class-booking"><li class="p-0.5 link" (click)="hideAll()">Book a Class</li></a>
+                        <a routerLink="/studio-rental"><li class="p-0.5 link" (click)="hideAll()">Rent our Studio</li></a>
                     </ul>
                 </div>
-                <button class="font-eurostile text-white font-bold text-lg p-1 w-11 h-11 cursor-pointer ml-5" (click)="extendHeader()"><img src="/images/drawer_icon.png" alt="drawer icon" class="w-full"></button>
+                <div class="flex flex-col w-fit relative text-white">
+                    <div class="flex">
+                        <img src="{{profile_img()}}" alt="profile icon" class="w-11 h-11 cursor-pointer ml-5" (click)="this.profile_show.set(!this.profile_show());">
+                        <button class="font-eurostile text-white font-bold text-lg p-1 w-11 h-11 cursor-pointer ml-5" (click)="extendHeader()"><img src="/images/drawer_icon.png" alt="drawer icon" class="w-full"></button>
+                    </div>
+                    <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':profile_show() && state.user() != null, 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all() && state.user() != null}">
+                        <li class="p-0.5 link font-bold" (click)="hideAll()">My Profile</li>
+                        <li class="p-0.5 link" (click)="hideAll()">My Bookings</li>
+                        <li class="p-0.5 link text-red-400" (click)="hideAll()">Logout</li>
+                    </ul>
+                    <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':profile_show() && state.user() == null, 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all() && state.user() == null}">
+                        <a [routerLink]="[{outlets: {sidebar:['login']}}]"><li class="p-0.5 link font-bold text-violet" (click)="hideAll()">Login</li></a>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

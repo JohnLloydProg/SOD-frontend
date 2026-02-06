@@ -79,7 +79,7 @@ export class LandingPage {
     }
   ]
 
-  @HostListener('wheel')
+  @HostListener('window:scroll')
   onWheel() {
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout(() => {

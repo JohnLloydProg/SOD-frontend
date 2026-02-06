@@ -1,6 +1,7 @@
-import { NgClass, Location } from '@angular/common';
-import { Component, HostListener, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { NgClass, Location, NgOptimizedImage } from '@angular/common';
+import { Component, effect, HostListener, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AppState } from '../../services/app-state';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +10,26 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
+  protected state = inject(AppState);
+
+  profile_img = signal('/images/profile_icon_hollow.png');
   isScrolled = false;
   classes_show = signal(false);
   events_show = signal(false);
   bookings_show = signal(false);
+  profile_show = signal(false);
   show_all = signal(false);
   currentUrl : string;
 
   constructor(private location: Location) {
     this.currentUrl = this.location.path();
+    effect(() => {
+      if (this.state.user()) {
+        this.profile_img.set('/images/profile_icon_solid.png');
+      }else {
+        this.profile_img.set('/images/profile_icon_hollow.png');
+      }
+    });
   }
 
   getCurrentPath() : string {
@@ -34,6 +46,17 @@ export class Header {
     this.classes_show.set(false);
     this.events_show.set(false);
     this.bookings_show.set(false);
-
+    this.profile_show.set(false);
   }
+
+  hideAll() {
+    this.show_all.set(false);
+    this.classes_show.set(false);
+    this.events_show.set(false);
+    this.bookings_show.set(false);
+    this.profile_show.set(false);
+  }
+
+
+
 }
