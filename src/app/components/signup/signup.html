@@ -1,21 +1,10 @@
 <div class="flex flex-col w-full h-full p-5 bg-black text-white">
     <img src="/images/SOD_Logo_FA-21.png" alt="Stage of Dance Logo" class="w-25 my-5  mx-auto">
     <h2 class="font-hanson text-white font-bold text-4xl text-center">Sign Up</h2>
-    <input type="email" name="email" id="email" placeholder="Email" class="mt-10 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
-    <div class="flex mt-5 p-2 w-full " [ngClass]="{'border-gold':password_focused(), 'border-white':!password_focused(), 'border-2':password_focused(), 'border':!password_focused()}">
-        <input #password [type]="this.visible ? 'text':'password'" name="password" 
-        id="password" placeholder="Password" class="text-white w-full font-open-sans focus:outline-none focus:ring-0 focus:border-none"
-        (focus)="password_focused.set(true)" (blur)="password_focused.set(false)"
-        >
-        <img src="{{password_icon()}}" alt="show password" class="w-5 ml-2 my-auto cursor-pointer" (click)="togglePasswordVisibility()">
-    </div>
-    <div class="flex mt-5 p-2 w-full " [ngClass]="{'border-gold':confirm_focused(), 'border-white':!confirm_focused(), 'border-2':confirm_focused(), 'border':!confirm_focused()}">
-        <input #password [type]="this.visible ? 'text':'password'" name="confirm_password" 
-        id="confirm_password" placeholder="Confirm Password" class="text-white w-full font-open-sans focus:outline-none focus:ring-0 focus:border-none"
-        (focus)="confirm_focused.set(true)" (blur)="confirm_focused.set(false)"
-        >
-        <img src="{{password_icon()}}" alt="show password" class="w-5 ml-2 my-auto cursor-pointer" (click)="togglePasswordVisibility()">
-    </div>
+    <input type="text" name="name" id="name" placeholder="Name" class="mt-10 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
+    <input type="email" name="email" id="email" placeholder="Email" class="mt-5 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
+    <app-password #password placeholder="Password" design="dark"></app-password>
+    <app-password #confirm_password placeholder="Confirm Password" design="dark"></app-password>
     <label class="flex items-center gap-3 cursor-pointer group mt-5">
         <input type="checkbox" class="peer sr-only" />
 

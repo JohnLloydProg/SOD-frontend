@@ -2,13 +2,7 @@
     <img src="/images/SOD_Logo_FA-21.png" alt="Stage of Dance Logo" class="w-25 my-5  mx-auto">
     <h2 class="font-hanson text-white font-bold text-4xl text-center">Login</h2>
     <input type="email" name="email" id="email" placeholder="Email" class="mt-10 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
-    <div class="flex mt-5 p-2 w-full " [ngClass]="{'border-gold':password_focused(), 'border-white':!password_focused(), 'border-2':password_focused(), 'border':!password_focused()}">
-        <input #password [type]="this.visible ? 'text':'password'" name="password" 
-        id="password" placeholder="Password" class="text-white w-full font-open-sans focus:outline-none focus:ring-0 focus:border-none"
-        (focus)="password_focused.set(true)" (blur)="password_focused.set(false)"
-        >
-        <img src="{{password_icon()}}" alt="show password" class="w-5 ml-2 my-auto cursor-pointer" (click)="togglePasswordVisibility()">
-    </div>
+    <app-password placeholder="Password" design="dark"></app-password>
     <button class="font-eurostile font-bold text-black text-xl rounded-full bg-white uppercase py-2 mt-10">Login</button>
     <p class="font-lexend text-xs text-white text-center mt-5">Don't have an account? <a [routerLink]="['', {outlets: {sidebar:['sign-up']}}]" class="font-bold text-gold">Sign Up</a></p>
 </div>

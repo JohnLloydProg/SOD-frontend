@@ -5,7 +5,24 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class AppState {
-  readonly user = signal<User|null>(null);
+  /*{
+    id: 'abc',
+    name: 'abc efg',
+    email: 'abc@gmail.com',
+    password: 'abc12345',
+    contact_number: '091234',
+    birthday: new Date(),
+    address: 'abc street',
+  }*/
+  readonly user = signal<User|null>({
+    id: 'abc',
+    name: 'abc efg',
+    email: 'abc@gmail.com',
+    password: 'abc12345',
+    contact_number: '091234',
+    birthday: new Date(),
+    address: 'abc street',
+  });
   overlay_show = signal(false);
 
   set_user(user: User) {

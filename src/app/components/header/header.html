@@ -47,8 +47,10 @@
                         <button class="font-eurostile text-white font-bold text-lg p-1 w-11 h-11 cursor-pointer ml-5" (click)="extendHeader()"><img src="/images/drawer_icon.png" alt="drawer icon" class="w-full"></button>
                     </div>
                     <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':profile_show() && state.user() != null, 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all() && state.user() != null}">
-                        <li class="p-0.5 link font-bold" (click)="hideAll()">My Profile</li>
-                        <li class="p-0.5 link" (click)="hideAll()">My Bookings</li>
+                        <a [routerLink]="[{outlets: {sidebar:['profile']}}]"><li class="p-0.5 link font-bold" (click)="hideAll()">My Profile</li></a>
+                        <a [routerLink]="[{outlets: {sidebar:['bookings']}}]"><li class="p-0.5 link" (click)="hideAll()">My Bookings</li></a>
+                        <a [routerLink]="[{outlets: {sidebar:['bookings']}}]"><li class="p-0.5 link" (click)="hideAll()">My Rentals</li></a>
+                        <a [routerLink]="[{outlets: {sidebar:['bookings']}}]"><li class="p-0.5 link" (click)="hideAll()">My Orders</li></a>
                         <li class="p-0.5 link text-red-400" (click)="hideAll()">Logout</li>
                     </ul>
                     <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':profile_show() && state.user() == null, 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all() && state.user() == null}">
@@ -58,4 +60,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="profile fixed w-full md:w-80 border-2 border-black top-20 h-[calc(100vh-5rem)] right-0 z-50" [ngClass]="{'block': sidebar_show(), 'hidden': !sidebar_show()}">
+    <router-outlet name="sidebar" (activate)="sidebar_show.set(true)" (deactivate)="sidebar_show.set(false)"></router-outlet>
 </div>

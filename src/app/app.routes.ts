@@ -8,6 +8,8 @@ import { StudioRentalPage } from './pages/studio-rental-page/studio-rental-page'
 import { ClassBookingPage } from './pages/class-booking-page/class-booking-page';
 import { Login } from './components/login/login';
 import { Signup } from './components/signup/signup';
+import { Profile } from './components/profile/profile';
+import { Booking } from './components/booking/booking';
 
 export const routes: Routes = [
     { path:'', component:LandingPage, title:'State of Dance' },
@@ -19,4 +21,6 @@ export const routes: Routes = [
     { path:'class-booking', component:ClassBookingPage, title:'Class Booking'},
     { path:'login', component:Login, title:'Login', outlet:'sidebar'},
     { path:'sign-up', component:Signup, title:'Sign Up', outlet:'sidebar'},
+    { path:'profile', component:Profile, title:'Profile', outlet:'sidebar'},
+    { path:'bookings', component:Booking, title:'Booking', outlet:'sidebar'}
 ];

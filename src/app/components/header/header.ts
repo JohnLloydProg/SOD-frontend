@@ -1,18 +1,20 @@
 import { NgClass, Location, NgOptimizedImage } from '@angular/common';
 import { Component, effect, HostListener, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppState } from '../../services/app-state';
 
 @Component({
   selector: 'app-header',
-  imports: [NgClass, RouterLink],
+  imports: [NgClass, RouterLink, RouterOutlet],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
   protected state = inject(AppState);
+  protected router = inject(Router);
 
   profile_img = signal('/images/profile_icon_hollow.png');
+  sidebar_show = signal(false);
   isScrolled = false;
   classes_show = signal(false);
   events_show = signal(false);
@@ -42,11 +44,15 @@ export class Header {
   }
 
   extendHeader() {
-    this.show_all.set(!this.show_all())
-    this.classes_show.set(false);
-    this.events_show.set(false);
-    this.bookings_show.set(false);
-    this.profile_show.set(false);
+    if (this.sidebar_show()) {
+      this.router.navigate(['', {outlets: {sidebar: null}}]);
+    }else {
+      this.show_all.set(!this.show_all())
+      this.classes_show.set(false);
+      this.events_show.set(false);
+      this.bookings_show.set(false);
+      this.profile_show.set(false);
+    }
   }
 
   hideAll() {
