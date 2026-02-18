@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, inject, input, NgZone, OnDestroy, 
 import { Coach } from '../../interfaces/coach';
 import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import { LessonService } from '../../services/lesson-service';
 
 @Component({
   selector: 'app-slide-carousel',
@@ -10,67 +11,33 @@ import { RouterLink } from "@angular/router";
   styleUrl: './slide-carousel.css',
 })
 export class SlideCarousel implements OnInit, OnDestroy {
+  private lesson_service = inject(LessonService);
   targetZone = viewChild.required<ElementRef>('targetZone');
   moving = viewChild.required<ElementRef>('moving');
   coachCards = viewChildren<ElementRef>('coachCard');
   activeIndex = signal<number | null>(null);
+  coaches = signal<Coach[]>([]);
 
   private animationFrameId: number | null = null;
   private ngZone = inject(NgZone);
   private currentScroll = 0;
 
-  coaches:Coach[] = [
-    {
-      name: "Kervin Mendiola",
-      class: "Kids, Revibe, Flowtion",
-      image: "/images/coaches/coach_1.jpg"
-    },
-    {
-      name: "Gabriel Aguilar",
-      class: "Kids, Nubiets, Swag Attack",
-      image: "/images/coaches/coach_8.png"
-    },
-    {
-      name: "Carlette Peronilla",
-      class: "Pop Trends, Revibe",
-      image: "/images/coaches/coach_3.jpg"
-    },
-    {
-      name: "Emman Aguilar",
-      class: "Kids",
-      image: "/images/coaches/coach_7.png"
-    },
-    {
-      name: "Katta Labnao",
-      class: "K-Pop, Kids",
-      image: "/images/coaches/coach_9.JPG"
-    },
-    {
-      name: "Renzo Suson",
-      class: "Kids",
-      image: "/images/coaches/coach_2.jpg"
-    },
-    {
-      name: "Ish Rivera",
-      class: "Femma Soultry",
-      image: "/images/coaches/coach_6.png"
-    },
-    {
-      name: "Kevin Cezar Samson",
-      class: "Kids",
-      image: "/images/coaches/coach_4.jpg"
-    },
-    {
-      name: "Seyah Singson",
-      class: "Power Femme",
-      image: "/images/coaches/coach_5.jpg"
-    }
-  ]
-
   translateX = signal<string>('translateX(120rem)');
   sectionScrollProgress = input.required<Signal<number>>();
 
   ngOnInit(): void {
+    this.lesson_service.get_coaches().then(coaches => {
+      for (const coach of coaches) {
+        this.lesson_service.get_lessons_per_coach(coach.id).then(lessons => {
+          coach.lessons = lessons; 
+          this.coaches().push(coach);
+          this.coaches().sort((a, b) => a.id - b.id);
+        });
+      }
+    });
+
+    
+
     this.ngZone.runOutsideAngular(() => {
       this.animate();
     });

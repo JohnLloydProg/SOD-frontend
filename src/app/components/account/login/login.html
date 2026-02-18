@@ -1,0 +1,10 @@
+<div class="flex flex-col w-full h-full p-5 bg-black text-white">
+    <img src="/images/SOD_Logo_FA-21.png" alt="Stage of Dance Logo" class="w-25 my-5  mx-auto">
+    <h2 class="font-hanson text-white font-bold text-4xl text-center">Login</h2>
+    <input type="email" [formControl]="email" name="email" id="email" placeholder="Email" class="mt-10 p-2 border border-white text-white font-open-sans focus:outline-none focus:ring-0 focus:border-gold focus:border-2">
+    <app-password #password placeholder="Password" design="dark"></app-password>
+    <button 
+    class="font-eurostile font-bold text-black text-xl rounded-full bg-white hover:bg-gold uppercase py-2 mt-10 cursor-pointer"
+    (click)="login()">Login</button>
+    <p class="font-lexend text-xs text-white text-center mt-5">Don't have an account? <a [routerLink]="['', {outlets: {sidebar:['sign-up']}}]" class="font-bold text-gold">Sign Up</a></p>
+</div>

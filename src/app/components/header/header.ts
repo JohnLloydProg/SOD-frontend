@@ -63,6 +63,13 @@ export class Header {
     this.profile_show.set(false);
   }
 
-
+  profileClicked() {
+    if (this.state.user() == null) {
+      this.router.navigate(['', {outlets:{sidebar: 'login'}}]);
+    }else {
+      this.router.navigate(['', {outlets:{sidebar: 'account'}}]);
+    }
+    
+  }
 
 }

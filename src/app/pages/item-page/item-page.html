@@ -1,12 +1,12 @@
 <div class="min-h-screen flex pt-30 justify-center lg:flex-row flex-col">
     <div class="flex w-full lg:w-1/2 p-10">
         <div class="hidden lg:flex flex-col w-40 mr-5">
-            @for (image_link of item.image_links; track $index) {
+            @for (image_link of item()!.image_links; track $index) {
                 <div class="relative mb-5">
                     @if (current_index() != $index) {
                         <div class="bg-black absolute w-full h-full opacity-40"></div>
                     }
-                    <img src="{{image_link}}" alt="item_gallery {{$index}}">
+                    <img src="{{image_link.image}}" alt="item_gallery {{$index}}">
                 </div>
                 
             }
@@ -17,7 +17,7 @@
             class="absolute top-1/2 transform -translate-y-1/2 rotate-180 left-3 cursor-pointer"
             (click)="previous()"
             >
-            <img #mainDisplay src="{{item.image_links[current_index()]}}" alt="item" class="h-full">
+            <img #mainDisplay src="{{item()!.image_links[current_index()].image}}" alt="item" class="h-full">
             <img 
             src="/images/next_circular_button.png" alt="next circular button" 
             class="absolute top-1/2 transform -translate-y-1/2 right-3 cursor-pointer"
@@ -26,8 +26,8 @@
         </div>
     </div>
     <div class="flex flex-col p-10">
-        <h1 class="font-lexend text-black text-4xl font-bold md:text-left text-center">{{item.name}}</h1>
-        <h2 class="font-open-sans text-black text-2xl font-bold mt-5 md:text-left text-center">₱{{item.price}}</h2>
+        <h1 class="font-lexend text-black text-4xl font-bold md:text-left text-center">{{item()!.name}}</h1>
+        <h2 class="font-open-sans text-black text-2xl font-bold mt-5 md:text-left text-center">₱{{final_price}}</h2>
         <p class="font-lexend text-black text-xl mt-5 hidden md:block">Size Guide:</p>
         <table class="hidden md:block">
             <tr class="bg-black text-white text-xl font-lexend text-center">
@@ -67,26 +67,33 @@
                 <td class="p-2.5">11”</td>
             </tr>
         </table>
-        <div class="flex mt-10 lg:justify-between justify-center lg:flex-row flex-col">
-            <div class="flex items-center justify-between md:justify-start">
-                <p class="text-black font-lexend text-base md:mr-5">Select Size</p>
-                <select name="sizes" id="sizes" class="text-black font-lexend font-bold text-base text-center border border-black rounded-xs p-1 cursor-pointer">
-                    <option value="s">S</option>
-                    <option value="m">M</option>
-                    <option value="l">L</option>
-                    <option value="xl">XL</option>
-                    <option value="2xl">2XL</option>
-                </select>
+        <form [formGroup]="custom_form" class="flex mt-10 lg:justify-between justify-center lg:flex-row flex-col items-start">
+            <div class="flex flex-col">
+                @for (customization of customizations(); track $index) {
+                    <div class="flex items-center justify-between md:justify-start mb-5">
+                        <p class="text-black font-lexend text-base md:mr-5">Select {{customization.customizationName}}</p>
+                        <select name="sizes" id="sizes" formControlName="{{customization.customizationName}}"
+                        class="text-black font-lexend font-bold text-base text-center border border-black rounded-xs p-1 cursor-pointer truncate w-30">
+                            <option value="None">Select</option>
+                            @for (choice of customization.customizations; track $index){
+                                <option value="{{choice.id}}">{{choice.name}}</option>
+                            }
+                        </select>
+                    </div>
+                }
             </div>
+        
             <div class="flex items-center justify-between md:justify-start lg:mt-0 mt-5">
                 <p class="text-black font-lexend text-base md:mr-5">Select Branch</p>
-                <select name="sizes" id="sizes" class="text-black font-lexend font-bold text-base text-center border border-black rounded-xs p-1 cursor-pointer">
-                    <option value="binondo">BINONDO</option>
-                    <option value="quezon">QUEZON</option>
-                    <option value="bgc">BGC</option>
+                <select name="sizes" id="sizes" [formControl]="branch"
+                class="text-black font-lexend font-bold text-base text-center border border-black rounded-xs p-1 cursor-pointer truncate w-30">
+                    <option value="None">Select</option>
+                    @for (branch of branches(); track $index) {
+                        <option value="{{branch.id}}">{{branch.name}}</option>
+                    }
                 </select>
             </div>
-        </div>
+        </form>
         
         <div class="flex mt-10 lg:mt-auto lg:flex-row flex-col">
             <div class="flex w-full p-1 border border-black rounded-full">
@@ -100,6 +107,7 @@
             </div>
             <button 
             class="uppercase py-1 bg-black text-white font-eurostile text-xl w-full lg:w-100 lg:ml-10 rounded-full font-bold cursor-pointer lg:mt-0 mt-5"
+            (click)="submit()"
             >Buy Now</button>
         </div>
     </div>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MerchItem } from '../../interfaces/merch-item';
+import { StoreService } from '../../services/store-service';
 
 @Component({
   selector: 'app-merch-page',
@@ -7,19 +8,11 @@ import { MerchItem } from '../../interfaces/merch-item';
   templateUrl: './merch-page.html',
   styleUrl: './merch-page.css',
 })
-export class MerchPage {
-  merchandises: MerchItem[] = [
-    {
-      id:0,
-      name: 'SOD T-Shirt',
-      price: 700.00,
-      image_links: ['/images/merch/item_1/image_1.png', '/images/merch/item_1/image_1.png']
-    },
-    {
-      id:1,
-      name: 'SOD T-Shirt',
-      price: 700.00,
-      image_links: ['/images/merch/item_1/image_1.png', '/images/merch/item_1/image_1.png']
-    }
-  ]
+export class MerchPage implements OnInit{
+  store_service = inject(StoreService);
+  merchandises = signal<MerchItem[]>([]);
+
+  ngOnInit(): void {
+    this.store_service.get_merchs().then(merchs => this.merchandises.set(merchs));
+  }
 }

@@ -1,6 +1,7 @@
 export interface Class {
-    name:string,
-    img:string,
+    id: number,
+    title:string,
+    thumbnail:string,
     description:string,
-    difficulty:string
+    difficulty_level:string
 }

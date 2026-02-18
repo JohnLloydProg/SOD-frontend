@@ -4,6 +4,7 @@ import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { NgClass } from "@angular/common";
 import { AppState } from './services/app-state';
+import { AccountService } from './services/account-service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { AppState } from './services/app-state';
 export class App implements OnInit{
   protected readonly title = signal('test');
   protected state = inject(AppState);
+  protected account_service = inject(AccountService);
   sidebar_show = signal(false);
 
 
@@ -21,6 +23,13 @@ export class App implements OnInit{
   ngOnInit(): void {
     this.state.screen_width.set(window.innerWidth);
     this.state.screen_height.set(window.innerHeight);
+    const authToken =  localStorage.getItem('authToken');
+    if (authToken) {
+      this.account_service.get_user(authToken).then(user => {
+        user.authToken = authToken;
+        this.state.set_user(user);
+      });
+    }
   }
   
   @HostListener('window:resize')

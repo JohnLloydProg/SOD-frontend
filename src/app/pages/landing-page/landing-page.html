@@ -169,7 +169,7 @@
     <h3 class="font-hanson font-bold text-center text-white text-4xl mt-5 lg:block hidden">Types of Classes</h3>
 
     <div class="flex flex-wrap mt-15 justify-center">
-        @for (class of classes; track class; let i = $index) {
+        @for (class of classes(); track class; let i = $index) {
             <app-class-card [class]="class"></app-class-card>
         }
     </div>

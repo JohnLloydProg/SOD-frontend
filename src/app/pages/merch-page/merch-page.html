@@ -5,10 +5,10 @@
         <img src="/images/black_diamond.png" alt="diamond" class="w-20 -translate-x-1 lg:block hidden">
     </div>
     <div class="flex flex-wrap mt-15">
-        @for (merch of merchandises; track merch; let i = $index) {
+        @for (merch of merchandises(); track merch; let i = $index) {
             <div class="item w-80 flex flex-col mx-15">
                 <a href="/merch/item/{{merch.id}}">
-                    <img src="{{merch.image_links[0]}}" alt="{{merch.name}}" class="w-full hover:scale-110 transition-all duration-500 ease-in-out">
+                    <img src="{{merch.thumbnail}}" alt="{{merch.name}}" class="w-full hover:scale-110 transition-all duration-500 ease-in-out">
                     <h4 class="text-black font-open-sans font-bold text-xl text-center mt-5">{{merch.name}}</h4>
                     <p class="text-black font-open-sans text-xl text-center">₱{{merch.price}}</p>
                 </a>

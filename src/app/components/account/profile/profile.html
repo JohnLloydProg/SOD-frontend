@@ -1,0 +1,27 @@
+<div class="flex flex-col w-full h-full p-5 bg-amber-50 text-black">
+    <img src="/images/dark_profile_icon.png" alt="Stage of Dance Logo" class="w-25 my-5  mx-auto">
+    <h2 class="font-hanson text-black font-bold text-4xl text-center">My Profile</h2>
+    <div class="h-full overflow-y-auto w-full">
+        <input type="text" name="name" id="name" placeholder="Name" 
+        class="mt-10 p-2 border border-black text-black font-open-sans w-full focus:ring-0 focus:border-2"
+        value="{{state.user()?.username}}">
+        <input type="email" name="email" id="email" placeholder="Email" 
+        class="mt-5 p-2 border border-black text-black font-open-sans w-full focus:ring-0 focus:border-2"
+        value="{{state.user()?.email}}">
+        <app-password #password placeholder="Password" design="light"></app-password>
+        <app-password #confirm_password placeholder="Confirm Password" design="light"></app-password>
+        <input type="text" name="contact" id="contact" placeholder="Phone Number" 
+        class="mt-5 p-2 border border-black text-black font-open-sans w-full focus:ring-0 focus:border-2"
+        value="{{state.user()?.contact}}">
+        <input #date type="date" name="date" class="mt-5 text-black border border-black p-2 w-full"
+        value="{{state.user()?.birthdate}}">
+        <input type="text" name="address" id="address" placeholder="Address" 
+        class="mt-5 p-2 border border-black text-black font-open-sans w-full focus:ring-0 focus:border-2"
+        value="{{state.user()?.address}}">
+    </div>
+
+    <button class="font-eurostile font-bold text-white text-xl rounded-full bg-black uppercase py-2 mt-10">Save Changes</button>
+    <a [routerLink]="['', {outlets:{sidebar: 'account'}}]" class="mt-5">
+        <button class="font-eurostile font-bold text-white text-xl rounded-full bg-black uppercase py-2 w-full cursor-pointer">Back</button>
+    </a>
+</div>

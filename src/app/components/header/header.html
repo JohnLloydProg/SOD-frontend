@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <div class="flex h-11 items-center">
-                        <a [routerLink]="['', {outlets:{sidebar: 'profile'}}]"><img src="{{profile_img()}}" alt="profile icon" class="min-w-8 h-8 cursor-pointer ml-5" (click)="hideAll()"></a>
+                        <img src="{{profile_img()}}" alt="profile icon" class="min-w-8 h-8 cursor-pointer ml-5" (click)="hideAll(); profileClicked();">
                         <button class="font-eurostile text-white font-bold text-lg p-1 w-10 h-10 cursor-pointer ml-5" (click)="extendHeader()"><img src="/images/drawer_icon.png" alt="drawer icon" class="w-full"></button>
                     </div>
                 </div>
@@ -56,12 +56,12 @@
         </div>
     </div>
 }@else {
-    <div class="navigation fixed w-full p-3 z-60" [ngClass]="{'scrolled': isScrolled || getCurrentPath().length > 2 || show_all()}">
+    <div class="navigation fixed w-full px-3 py-5 z-60" [ngClass]="{'scrolled': isScrolled || getCurrentPath().length > 2 || show_all()}">
         <div class="flex justify-between items-center w-full">
             <a routerLink="/"><img src="/images/header_logo.png" alt="SOD-Brand-Logo" class="min-w-60 w-60" (click)="hideAll()"></a>
 
             <div class="flex h-11 items-center w-fit">
-                <a [routerLink]="['', {outlets:{sidebar: 'profile'}}]"><img src="{{profile_img()}}" alt="profile icon" class="min-w-8 h-8 cursor-pointer ml-5" (click)="hideAll()"></a>
+                <img src="{{profile_img()}}" alt="profile icon" class="min-w-8 h-8 cursor-pointer ml-5" (click)="hideAll();profileClicked();">
                 <img src="/images/drawer_icon.png" alt="drawer icon" class="w-7 h-7 lg:w-10 lg:h-10 cursor-pointer ml-5" (click)="extendHeader()">
             </div>
         </div>

@@ -1,6 +1,11 @@
+import { Class } from "./class";
+
 export interface Coach {
+    id:number,
     name:string,
-    class:string,
-    image:string,
-    video?:string
+    card_picture:string,
+    bio_picture:string,
+    bio:string,
+    motto:string,
+    lessons?:string[]
 }

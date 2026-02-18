@@ -6,10 +6,11 @@ import { MerchPage } from './pages/merch-page/merch-page';
 import { ItemPage } from './pages/item-page/item-page';
 import { StudioRentalPage } from './pages/studio-rental-page/studio-rental-page';
 import { ClassBookingPage } from './pages/class-booking-page/class-booking-page';
-import { Login } from './components/login/login';
-import { Signup } from './components/signup/signup';
-import { Profile } from './components/profile/profile';
-import { Booking } from './components/booking/booking';
+import { Login } from './components/account/login/login';
+import { Signup } from './components/account/signup/signup';
+import { Profile } from './components/account/profile/profile';
+import { Booking } from './components/account/booking/booking';
+import { NavBar } from './components/account/nav-bar/nav-bar';
 
 export const routes: Routes = [
     { path:'', component:LandingPage, title:'State of Dance' },
@@ -22,5 +23,6 @@ export const routes: Routes = [
     { path:'login', component:Login, title:'Login', outlet:'sidebar'},
     { path:'sign-up', component:Signup, title:'Sign Up', outlet:'sidebar'},
     { path:'profile', component:Profile, title:'Profile', outlet:'sidebar'},
-    { path:'bookings', component:Booking, title:'Booking', outlet:'sidebar'}
+    { path:'bookings', component:Booking, title:'Booking', outlet:'sidebar'},
+    { path:"account",  component:NavBar, title:'Account', outlet:'sidebar'}
 ];

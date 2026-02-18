@@ -1,10 +1,11 @@
 export interface User {
     id?: string,
-    name?: string,
+    username?: string,
     email: string,
-    password: string,
-    contact_number?: string,
-    birthday?: Date,
+    password?: string,
+    contact?: string,
+    birthdate?: Date,
     address?: string,
     created_at?: string,
+    authToken?:string
 }
