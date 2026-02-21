@@ -1,5 +1,6 @@
+import { LessonSchedule } from "./lesson-schedule";
+
 export interface ScheduleBooking {
     date:Date,
-    time:string,
-    class:string,
+    schedule:LessonSchedule,
 }

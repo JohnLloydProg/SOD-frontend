@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Coach } from '../interfaces/coach';
 import { environment } from '../../environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Class } from '../interfaces/class';
 import { LessonSchedule } from '../interfaces/lesson-schedule';
+import { ScheduleBooking } from '../interfaces/schedule-booking';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +28,15 @@ export class LessonService {
     return firstValueFrom(observable);
   }
 
-  async get_schedules() : Promise<LessonSchedule[]> {
-    const observable = this.httpClient.get<LessonSchedule[]>(`${environment.apiURl}/lessons/schedules`);
+  async get_schedules(branch_id:number) : Promise<Array<LessonSchedule[]>> {
+    const observable = this.httpClient.get<Array<LessonSchedule[]>>(`${environment.apiURl}/lessons/schedules/${branch_id}`);
     return firstValueFrom(observable);
+  }
+
+  async book_enrollment(schedule:ScheduleBooking[], authToken:string): Promise<string>{
+    const observabe = this.httpClient.post<string>(`${environment.apiURl}/transactions/enroll/`, schedule,
+      {headers: new HttpHeaders('').set('Authorization', `Token ${authToken}`)}
+    );
+    return firstValueFrom(observabe);
   }
 }

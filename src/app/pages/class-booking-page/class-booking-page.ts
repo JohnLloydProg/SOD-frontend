@@ -4,6 +4,13 @@ import { Schedule } from '../../components/calendar/schedule/schedule';
 import { NgClass } from '@angular/common';
 import { AppState } from '../../services/app-state';
 import { ScheduleBooking } from '../../interfaces/schedule-booking';
+import { LessonService } from '../../services/lesson-service';
+import { LessonSchedule } from '../../interfaces/lesson-schedule';
+import { AccountService } from '../../services/account-service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Branch } from '../../interfaces/branch';
+import { Coach } from '../../interfaces/coach';
+import { Class } from '../../interfaces/class';
 
 function getDaysInMonthWithWeekday(year: number, month: number): { day: number, weekday: number }[] {
     const date = new Date(year, month, 1);
@@ -21,53 +28,49 @@ function getDaysInMonthWithWeekday(year: number, month: number): { day: number, 
 
 @Component({
   selector: 'app-class-booking-page',
-  imports: [Schedule, NgClass],
+  imports: [Schedule, NgClass, ReactiveFormsModule],
   templateUrl: './class-booking-page.html',
   styleUrl: './class-booking-page.css',
 })
 export class ClassBookingPage implements OnInit {
   @ViewChild('monthSelect') monthSelect!:ElementRef;
   protected state = inject(AppState);
+  protected lesson_service = inject(LessonService);
+  protected account_service = inject(AccountService); 
 
   months = [
     'January', 'February', 'March', 'April', 'May',
     'June', 'July', 'August', 'September', 'October',
     'November', 'December'
   ]
-  classes:Array<ClassSchedule[]> = [
-    [
-      {name:'Kids Class', coach:'Kervin Mendiola', difficulty:'BGNR', time:'1:00 PM', weekday: 0}
-    ],
-    [
-      {name:'Revibe Class', coach:'Kervin Mendiola', difficulty:'BGNR', time:'6:00 PM', weekday: 1},
-      {name:'Femme Soultry Class', coach:'Kervin Mendiola', difficulty:'BGNR to INTMD', time:'7:30 PM', weekday: 1}
-    ],
-    [
-
-    ],
-    [
-      {name:'Pop Trends Class', coach:'Kervin Mendiola', difficulty:'BGNR to INTMD', time:'7:00 PM', weekday: 3}
-    ],
-    [
-      {name:'Power Femme Class', coach:'Kervin Mendiola', difficulty:'BGNR to INTMD', time:'7:00 PM', weekday: 4}
-    ],
-    [
-      {name:'Flowtion Class', coach:'Kervin Mendiola', difficulty:'INTMD to AVNCD', time:'7:00 PM', weekday: 4}
-    ],
-    [
-      {name:'Kids Class', coach:'Kervin Mendiola', difficulty:'BGNR', time:'4:00 PM', weekday: 6},
-      {name:'K-Pop Class', coach:'Kervin Mendiola', difficulty:'INT', time:'7:30 PM', weekday: 6},
-      {name:'Revibe Class', coach:'Kervin Mendiola', difficulty:'BGNR', time:'6:00 PM', weekday: 6}
-    ]
-  ]
+  classes = signal<Array<LessonSchedule[]>>([]);
 
   date = new Date();
   days!:{ day: number, weekday: number }[];
-  cells:Array<Array<{ day: number, weekday: number } | undefined>> = [];
-  selected_day_mobile:{day:number, weekday:number}|null = null;
+  cells:Array<Date | undefined> = [];
+  selected_date_mobile:Date|null = null;
   selected_schedules:ScheduleBooking[] = [];
+  branch = new FormControl(1);
+  coach = new FormControl('-1');
+  lesson = new FormControl('-1');
+  branches = signal<Branch[]>([]);
+  coaches = signal<Coach[]>([]);
+  lessons = signal<Class[]>([]);
 
   ngOnInit(): void {
+    this.account_service.get_branches().then(branches => {
+      this.branches.set(branches);
+      this.branch.setValue(branches[0].id);
+      this.lesson_service.get_schedules(branches[0].id).then(schedules => {this.classes.set(schedules);});
+      this.monthSelect.nativeElement.value = this.date.getMonth();
+    });
+    this.lesson_service.get_coaches().then(coaches => this.coaches.set(coaches));
+    this.lesson_service.get_classes().then(lessons => this.lessons.set(lessons));
+    this.branch.valueChanges.subscribe(branch_id => {
+      if (branch_id) {
+        this.lesson_service.get_schedules(branch_id).then(schedules => {this.classes.set(schedules);})
+      }
+    });
     this.updateCalendar();
   }
 
@@ -75,89 +78,104 @@ export class ClassBookingPage implements OnInit {
     this.days = getDaysInMonthWithWeekday(this.date.getFullYear(), this.date.getMonth());
     this.cells = [];
     let day1_weekday = this.days[0].weekday;
-    let row:Array<{ day: number, weekday: number } | undefined> = [];
 
     for (let i = 0; i < day1_weekday; i++) {
-      row.push(undefined);
+      this.cells.push(undefined);
     }
 
     for (const day of this.days) {
-      row.push(day);
-      if (day.weekday == 6) {
-        this.cells.push(row);
-        row = [];
-      }
+      let date = new Date(this.date.getFullYear(), this.date.getMonth(), day.day);
+      date.setHours(0, 0, 0, 0);
+      this.cells.push(date);
     }
 
-    if (row.length > 0) {
-      for (let i = row.length; i < 7; i++) {
-        row.push(undefined);
+    const remainingCells = 7 - (this.cells.length % 7);
+    if (remainingCells < 7) {
+      for (let i = 0; i < remainingCells; i++) {
+        this.cells.push(undefined);
       }
-      this.cells.push(row)
     }
   }
 
   payment() {
-    console.log(this.days);
+    this.lesson_service.book_enrollment(this.selected_schedules, this.state.user()?.authToken!).then(checkoutLink => {
+      window.open(checkoutLink);
+    })
   }
 
   nextMonth() {
     if (this.date.getMonth() == 11) {return;}
-    this.date.setMonth(this.date.getMonth() + 1);
-    this.monthSelect.nativeElement.value = this.date.getMonth();
-    this.updateCalendar()
+    this.lesson_service.get_schedules(this.branch.value!).then(schedules => {
+      this.date.setMonth(this.date.getMonth() + 1);
+      this.monthSelect.nativeElement.value = this.date.getMonth();
+      this.classes.set(schedules);
+      this.updateCalendar();
+    })
   }
 
   previousMonth() {
     if (this.date.getMonth() == 0) {return;}
-    this.date.setMonth(this.date.getMonth() - 1);
-    this.monthSelect.nativeElement.value = this.date.getMonth();
-    this.updateCalendar()
+    this.lesson_service.get_schedules(this.branch.value!).then(schedules => {
+      this.date.setMonth(this.date.getMonth() - 1);
+      this.monthSelect.nativeElement.value = this.date.getMonth();
+      this.classes.set(schedules);
+      this.updateCalendar();
+    })
   }
 
   selectedMonth(month:string) {
-    this.date.setMonth(parseInt(month));
-    this.updateCalendar()
+    this.lesson_service.get_schedules(this.branch.value!).then(schedules => {
+      this.date.setMonth(parseInt(month));
+      this.classes.set(schedules);
+      this.updateCalendar();
+    });
   }
 
  
-  checkSelectedByDay(day:{day:number, weekday:number}) : boolean {
+  checkSelectedByDay(date:Date) : boolean {
     for (const schedule of this.selected_schedules) {
-      if (schedule.date.getDate() == day.day) {
+      if (schedule.date.getTime() == date.getTime()) {
         return true;
       }
     }
     return false;
   }
 
-  checkSelectedByTime(day:number,time:string) : boolean {
+  checkSelectedByTime(date:Date,time:string) : boolean {
     for (const schedule of this.selected_schedules) {
-      if (schedule.time == time && schedule.date.getDate() == day) {
+      if (schedule.schedule.start_time == time && schedule.date.getTime() == date.getTime()) {
         return true;
       }
     }
     return false;
   }
 
-  clickedDay(day:{day:number, weekday:number}) {
+  clickedDay(date:Date) {
     if (this.state.screen_width() < 1024) {
-      this.selected_day_mobile = day != this.selected_day_mobile ? day : null;
+      this.selected_date_mobile = date != this.selected_date_mobile ? date : null;
     }
+  }
+
+  filterClass(_class:LessonSchedule):boolean {
+    if (this.lesson.value && this.coach.value) {
+      let lesson_id = parseInt(this.lesson.value);
+      let coach_id = parseInt(this.coach.value);
+      return (_class.lesson.id == lesson_id || lesson_id == -1) && (_class.coach.id == coach_id || coach_id  == -1);
+    }
+
+    return true
   }
 
   getMonth(month:string) {
     return this.months[parseInt(month)];
   }
 
-  clickedSchedule(event:[ScheduleBooking, boolean]):void {
-    const booking = event[0];
-    const selected = event[1];
-
-    if (selected) {
-      this.selected_schedules.push(booking);
+  clickedSchedule(schedule_booking:ScheduleBooking):void {
+    const index = this.selected_schedules.findIndex(_booking => schedule_booking.date.getTime() == _booking.date.getTime() && schedule_booking.schedule.id == _booking.schedule.id);
+    if (index < 0) {
+      this.selected_schedules.push(schedule_booking);
       console.log(this.selected_schedules)
     }else {
-      const index = this.selected_schedules.findIndex(_booking => booking.date.getTime() == _booking.date.getTime());
       this.selected_schedules = this.selected_schedules.filter((_, i) => i !== index);
       console.log(this.selected_schedules)
     }

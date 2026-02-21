@@ -1,7 +1,7 @@
 import { Component, EventEmitter, input, Output, signal } from '@angular/core';
-import { ClassSchedule } from '../../../interfaces/class-schedule';
 import { NgClass } from "@angular/common";
 import { ScheduleBooking } from '../../../interfaces/schedule-booking';
+import { LessonSchedule } from '../../../interfaces/lesson-schedule';
 
 @Component({
   selector: 'app-schedule',
@@ -10,16 +10,16 @@ import { ScheduleBooking } from '../../../interfaces/schedule-booking';
   styleUrl: './schedule.css',
 })
 export class Schedule {
-  class = input.required<ClassSchedule>();
-  month = input.required<string>();
-  day = input.required<number>();
+  class = input.required<LessonSchedule>();
+  date = input.required<Date>();
   section_selected = input.required<boolean>();
+  schedule_selected = input.required<boolean>();
 
   hovered = signal<boolean>(false);
 
-  @Output() select = new EventEmitter<[ScheduleBooking, boolean]>();
+  @Output() select = new EventEmitter<ScheduleBooking>();
 
   clicked() {
-    this.select.emit([{date:new Date(2026, parseInt(this.month()), this.day()), time:this.class().time, class:this.class().name}, !this.section_selected()]);
+    this.select.emit({date:this.date(), schedule:this.class()});
   }
 }
