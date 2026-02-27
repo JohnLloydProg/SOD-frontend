@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, input, NgZone, OnDestroy, OnInit, Signal, signal, viewChild, viewChildren } from '@angular/core';
+import { afterNextRender, Component, ElementRef, HostListener, inject, input, NgZone, OnDestroy, OnInit, Signal, signal, viewChild, viewChildren } from '@angular/core';
 import { Coach } from '../../interfaces/coach';
 import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
@@ -25,21 +25,25 @@ export class SlideCarousel implements OnInit, OnDestroy {
   translateX = signal<string>('translateX(120rem)');
   sectionScrollProgress = input.required<Signal<number>>();
 
+  constructor() {
+    afterNextRender(() => {
+      this.ngZone.runOutsideAngular(() => {
+        this.animate();
+      });
+    });
+  }
+
   ngOnInit(): void {
     this.lesson_service.get_coaches().then(coaches => {
       for (const coach of coaches) {
         this.lesson_service.get_lessons_per_coach(coach.id).then(lessons => {
           coach.lessons = lessons; 
-          this.coaches().push(coach);
-          this.coaches().sort((a, b) => a.id - b.id);
+          this.coaches.update(currentCoaches => {
+            const newCoaches = [...currentCoaches, coach];
+            return newCoaches.sort((a, b) => a.id - b.id);
+          });
         });
       }
-    });
-
-    
-
-    this.ngZone.runOutsideAngular(() => {
-      this.animate();
     });
   }
   

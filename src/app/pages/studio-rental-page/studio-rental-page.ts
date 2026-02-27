@@ -1,13 +1,24 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { NgClass } from "@angular/common";
+import { RentalService } from '../../services/rental-service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppState } from '../../services/app-state';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-studio-rental-page',
-  imports: [NgClass],
+  imports: [NgClass, ReactiveFormsModule],
   templateUrl: './studio-rental-page.html',
   styleUrl: './studio-rental-page.css',
 })
 export class StudioRentalPage {
+  @ViewChild('date') date!:ElementRef;
+  @ViewChild('startTime') startTime!:ElementRef;
+  @ViewChild('endTime') endTime!:ElementRef;
+
+  protected rental_service = inject(RentalService);
+  protected state = inject(AppState);
+
   quezon_images = [
     '/images/studio/quezon/gallery_1.jpg', '/images/studio/quezon/gallery_2.jpg', '/images/studio/quezon/gallery_3.jpg'
   ]
@@ -24,15 +35,22 @@ export class StudioRentalPage {
   quezon_active_index = signal<number>(0);
   binondo_active_index = signal<number>(0);
 
-  selected_date!:Date;
+  selected_date:Date|null = null;
   selected_branch = signal<string>('');
   start_index = signal<number>(0);
-  start_sched = signal<[number, number]>([0, 0]);
-  end_sched = signal<[number, number]>([0, 0]);
+  start_sched = signal<string>('');
+  end_sched = signal<string>('');
 
   constructor() {
     this.today = new Date();
     this.today.setDate(this.today.getDate() + 1);
+  }
+
+  setBranch(branch:string) {
+    this.selected_branch.set(branch);
+    this.date.nativeElement.value = '';
+    this.startTime.nativeElement.value = '';
+    this.endTime.nativeElement.value = '';
   }
 
   next(branch:string) {
@@ -66,24 +84,27 @@ export class StudioRentalPage {
   }
 
   selectDate(date:string) {
-    this.start_times = [];
     this.selected_date =  new Date(date);
-    this.available_scheds = [[10.5, 14.5], [16, 22]];
-    for (let i = 8; i < 22.5; i+= 0.5) {
+    this.rental_service.get_available_slots(this.selected_branch(), this.selected_date.toISOString()).then(available_slots => {
+      this.start_times = [];
+      this.available_scheds = available_slots;
+      for (let i = 8; i < 22.5; i+= 0.5) {
 
-      if (this.findGroup(i) < 0) {
-        continue;
+        if (this.findGroup(i) < 0) {
+          continue;
+        }
+        
+        let hour = Math.floor(i);
+        let min = (i % 1) * 60;
+
+        const min_display = min.toString().padStart(2, '0');
+        const hour_display = hour <= 12 ? hour : hour - 12;
+        const am_pm = hour < 12 ? 'AM' : 'PM';
+
+        this.start_times.push(`${hour_display}:${min_display} ${am_pm}`);
       }
-      
-      let hour = Math.floor(i);
-      let min = (i % 1) * 60;
-
-      const min_display = min.toString().padStart(2, '0');
-      const hour_display = hour <= 12 ? hour : hour - 12;
-      const am_pm = hour < 12 ? 'AM' : 'PM';
-
-      this.start_times.push(`${hour_display}:${min_display} ${am_pm}`);
-    }
+    });
+    
   }
 
   selectStartTime(index:string) {
@@ -96,7 +117,7 @@ export class StudioRentalPage {
       let hour_minute = time.split(' ')[0].split(':');
       const start_min = parseInt(hour_minute[1]);
       const start_hour = parseInt(hour_minute[0]) + (am_pm == 'PM' ? 12 : 0);
-      this.start_sched.set([start_hour,  start_min])
+      this.start_sched.set(time)
 
       const start_time = start_hour + (start_min/60)
       const group = this.findGroup(start_time)
@@ -120,10 +141,26 @@ export class StudioRentalPage {
       let am_pm = time.split(' ')[1];
       let hour_minute = time.split(' ')[0].split(':');
       const hour = parseInt(hour_minute[0]) + (am_pm == 'PM' ? 12 : 0);
-      this.end_sched.set([hour, parseInt(hour_minute[1])])
-      console.log(this.end_sched())
+      this.end_sched.set(time)
+    }
+  }
+
+  payment() {
+    if (!this.state.user()) {
+      alert('You need to be logged in to rent a studio.');
+      return;
+    }
+    if (!this.selected_date) {
+      alert('Select a date to book.');
+      return;
+    };
+    if (!this.start_sched() || !this.end_sched()) {
+      alert('Please complete the start and end time of your rent.');
+      return;
     }
 
+    this.rental_service.rent_studio(this.selected_branch(), this.selected_date, this.start_sched(), this.end_sched(), this.state.user()!.authToken!)
+    .then(checkoutUrl => window.open(checkoutUrl));
   }
 
 }

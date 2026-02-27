@@ -1,10 +1,11 @@
+import { Branch } from "./branch";
 import { Class } from "./class";
 import { Coach } from "./coach";
 
 export interface LessonSchedule {
     id:number,
     lesson:Class,
-    branch:number,
+    branch:Branch,
     students:number[],
     coach:Coach,
     weekday:number,

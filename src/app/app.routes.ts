@@ -11,6 +11,10 @@ import { Signup } from './components/account/signup/signup';
 import { Profile } from './components/account/profile/profile';
 import { Booking } from './components/account/booking/booking';
 import { NavBar } from './components/account/nav-bar/nav-bar';
+import { PackagePage } from './pages/package-page/package-page';
+import { Tickets } from './components/account/tickets/tickets';
+import { Orders } from './components/account/orders/orders';
+import { Rentals } from './components/account/rentals/rentals';
 
 export const routes: Routes = [
     { path:'', component:LandingPage, title:'State of Dance' },
@@ -20,9 +24,13 @@ export const routes: Routes = [
     { path:'merch/item/:id', component:ItemPage, title:"Item" },
     { path:'studio-rental', component:StudioRentalPage, title:'Studio Rental' },
     { path:'class-booking', component:ClassBookingPage, title:'Class Booking'},
+    { path:'packages', component:PackagePage, title:'Packages'},
     { path:'login', component:Login, title:'Login', outlet:'sidebar'},
     { path:'sign-up', component:Signup, title:'Sign Up', outlet:'sidebar'},
     { path:'profile', component:Profile, title:'Profile', outlet:'sidebar'},
     { path:'bookings', component:Booking, title:'Booking', outlet:'sidebar'},
+    { path:'orders', component:Orders, title:'Orders', outlet:'sidebar'},
+    { path:'rentals', component:Rentals, title:'Rentals', outlet:'sidebar'},
+    { path:'tickets', component:Tickets, title:'Tickets', outlet:'sidebar'},
     { path:"account",  component:NavBar, title:'Account', outlet:'sidebar'}
 ];

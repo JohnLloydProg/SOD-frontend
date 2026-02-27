@@ -4,6 +4,10 @@ import { User } from '../interfaces/user';
 import { environment } from '../../environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { Branch } from '../interfaces/branch';
+import { Enrollment } from '../interfaces/enrollment';
+import { Order } from '../interfaces/order';
+import { Rent } from '../interfaces/rent';
+import { Ticket } from '../interfaces/ticket';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +33,58 @@ export class AccountService {
   }
 
   async get_branches() : Promise<Branch[]> {
-    const observable = this.httpClient.get<Branch[]>(`${environment.apiURl}/members/branches`);
+    const observable = this.httpClient.get<Branch[]>(`${environment.apiURl}/members/branches/`);
     return firstValueFrom(observable);
-  }  
+  }
+
+  async change_password(new_password:string, authToken:string):Promise<User> {
+    const observable = this.httpClient.patch<User>(`${environment.apiURl}/members/change-password/`, {new_password:new_password}, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    });
+    return firstValueFrom(observable);
+  }
+
+  async update_details(original:User, current:User, authToken:string):Promise<User> {
+    const changes: any = {};
+
+    (Object.keys(current) as (keyof User)[]).forEach((key) => {
+      if (original[key] !== current[key]) {
+        changes[key] = current[key];
+      }
+    });
+     
+    const observable = this.httpClient.patch<User>(`${environment.apiURl}/members/me/`, changes as User, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    });
+    return firstValueFrom(observable);
+  }
+
+  async get_enrollments(authToken:string):Promise<Enrollment[]> {
+    const observable = this.httpClient.get<Enrollment[]>(`${environment.apiURl}/lessons/enrollments/`, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    })
+    return firstValueFrom(observable);
+  }
+
+  async get_orders(authToken:string):Promise<Order[]> {
+    const observable = this.httpClient.get<Order[]>(`${environment.apiURl}/transactions/orders/me/`, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    })
+    return firstValueFrom(observable);
+  }
+
+  async get_rentals(authToken:string):Promise<Rent[]> {
+    const observable = this.httpClient.get<Rent[]>(`${environment.apiURl}/transactions/rentals/me/`, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    })
+    return firstValueFrom(observable);
+  }
+
+  async get_tickets(authToken:string):Promise<Ticket[]> {
+    const observable = this.httpClient.get<Ticket[]>(`${environment.apiURl}/transactions/tickets/me/`, {
+      headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)
+    })
+    return firstValueFrom(observable);
+  }
+
 }

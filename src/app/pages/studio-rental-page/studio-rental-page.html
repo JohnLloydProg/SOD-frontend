@@ -16,10 +16,11 @@
                 }
             </select>
         </div>
-        <button class="mt-10 font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-full bg-linear-to-r from-gold to-violet uppercase">PROCEED TO PAYMENT</button>
+        <button class="mt-10 font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-full bg-linear-to-r from-gold to-violet uppercase cursor-pointer"
+        (click)="payment()">PROCEED TO PAYMENT</button>
     </div>
     <div class="flex flex-col w-full">
-        <div class="flex flex-wrap bg-amber-50 p-5 w-full border-12 border-black" (click)="selected_branch.set('quezon')" [ngClass]="{'border-gold':selected_branch()=='quezon'}">
+        <div class="flex flex-wrap bg-amber-50 p-5 w-full border-12 border-black" (click)="setBranch('quezon');" [ngClass]="{'border-gold':selected_branch()=='quezon'}">
             <div class="relative w-4/5 lg:w-1/2 m-auto mb-5 xl:h-full xl:m-0">
                 <img 
                 src="/images/next_circular_button.png" alt="next circular" 
@@ -64,7 +65,7 @@
                 <p class="text-black font-lexend text-base text-center mt-5">A very attractive space where you can take your performance to another level</p>
             </div>
         </div>
-        <div class="flex flex-wrap-reverse bg-amber-50 p-5 mt-10 w-full border-12 border-black" (click)="selected_branch.set('binondo')" [ngClass]="{'border-gold':selected_branch()=='binondo'}">
+        <div class="flex flex-wrap-reverse bg-amber-50 p-5 mt-10 w-full border-12 border-black" (click)="setBranch('binondo')" [ngClass]="{'border-gold':selected_branch()=='binondo'}">
             <div class="flex flex-col m-auto w-[24rem]">
                 <h2 class="text-black font-lexend text-3xl font-bold uppercase text-center">Binondo Manila</h2>
                 <div class="flex justify-center">

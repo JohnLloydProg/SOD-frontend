@@ -1,8 +1,10 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { NgClass } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Password } from "../../password/password";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { AccountService } from '../../../services/account-service';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +15,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class Signup {
   @ViewChild('password') password!:Password;
   @ViewChild('confirm_password') confirm_password!:Password;
+
+  protected service = inject(AccountService);
+  protected router = inject(Router);
 
   name = new FormControl('');
   email = new FormControl('');
@@ -29,7 +34,15 @@ export class Signup {
 
   signUp() {
     
-    
+    if (this.email.value && this.name.value) {
+      let user:User = {
+        email:this.email.value,
+        password:this.password.value(),
+        username:this.name.value
+      };
+
+      this.service.register(user).then(data => this.router.navigate(['', {outlets:{sidebar: 'login'}}]));
+    }
 
   }
 }

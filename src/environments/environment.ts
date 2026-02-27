@@ -1,4 +1,4 @@
 export const environment = {
     production:true,
-    apiURl:'http://127.0.0.1:8000'
+    apiURl:'https://sod-backend-522164650053.asia-southeast1.run.app'
 };

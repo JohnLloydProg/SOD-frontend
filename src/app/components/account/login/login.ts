@@ -30,6 +30,11 @@ export class Login {
         this.router.navigate(['', {outlets:{sidebar:null}}]);
       });
       
+    }).catch((reason) => {
+      if (reason.status == 400) {
+        alert('Wrong password or email! Please try again.');
+        return;
+      }
     });
   }
 }
