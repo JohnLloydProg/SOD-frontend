@@ -34,8 +34,8 @@ export class LessonService {
     return firstValueFrom(observable);
   }
 
-  async book_enrollment(schedule:ScheduleBooking[], authToken:string): Promise<string>{
-    const observabe = this.httpClient.post<string>(`${environment.apiURl}/transactions/enroll/`, schedule,
+  async book_enrollment(schedule:ScheduleBooking[], ticket_id:number, authToken:string): Promise<string>{
+    const observabe = this.httpClient.post<string>(`${environment.apiURl}/transactions/enroll/${ticket_id}/`, schedule,
       {headers: new HttpHeaders('').set('Authorization', `Token ${authToken}`)}
     );
     return firstValueFrom(observabe);

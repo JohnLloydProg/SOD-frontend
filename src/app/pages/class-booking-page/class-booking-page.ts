@@ -11,6 +11,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Branch } from '../../interfaces/branch';
 import { Coach } from '../../interfaces/coach';
 import { Class } from '../../interfaces/class';
+import { Ticket } from '../../interfaces/ticket';
+import { TicketOverlay } from '../../components/ticket-overlay/ticket-overlay';
+import { Router } from '@angular/router';
 
 function getDaysInMonthWithWeekday(year: number, month: number): { day: number, weekday: number }[] {
     const date = new Date(year, month, 1);
@@ -28,7 +31,7 @@ function getDaysInMonthWithWeekday(year: number, month: number): { day: number, 
 
 @Component({
   selector: 'app-class-booking-page',
-  imports: [Schedule, NgClass, ReactiveFormsModule],
+  imports: [Schedule, NgClass, ReactiveFormsModule, TicketOverlay],
   templateUrl: './class-booking-page.html',
   styleUrl: './class-booking-page.css',
 })
@@ -37,6 +40,7 @@ export class ClassBookingPage implements OnInit {
   protected state = inject(AppState);
   protected lesson_service = inject(LessonService);
   protected account_service = inject(AccountService); 
+  protected router = inject(Router);
 
   months = [
     'January', 'February', 'March', 'April', 'May',
@@ -56,12 +60,15 @@ export class ClassBookingPage implements OnInit {
   branches = signal<Branch[]>([]);
   coaches = signal<Coach[]>([]);
   lessons = signal<Class[]>([]);
+  tickets = signal<Ticket[]>([]);
+  finalizing_booking = false;
 
   ngOnInit(): void {
     this.account_service.get_branches().then(branches => {
       this.branches.set(branches);
       this.branch.setValue(branches[0].id);
       this.lesson_service.get_schedules(branches[0].id).then(schedules => {this.classes.set(schedules);});
+      this.account_service.get_tickets(this.state.user()?.authToken!).then(tickets => this.tickets.set(tickets));
       this.monthSelect.nativeElement.value = this.date.getMonth();
     });
     this.lesson_service.get_coaches().then(coaches => this.coaches.set(coaches));
@@ -97,10 +104,11 @@ export class ClassBookingPage implements OnInit {
     }
   }
 
-  payment() {
-    this.lesson_service.book_enrollment(this.selected_schedules, this.state.user()?.authToken!).then(checkoutLink => {
-      window.open(checkoutLink);
-    })
+  payment(ticket_id:number) {
+    console.log(this.selected_schedules, ticket_id, this.state.user()?.authToken!);
+    this.lesson_service.book_enrollment(this.selected_schedules, ticket_id, this.state.user()?.authToken!).then(response =>
+      this.router.navigate(['/'])
+    );
   }
 
   nextMonth() {

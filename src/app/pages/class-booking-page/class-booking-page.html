@@ -1,6 +1,10 @@
 <div class="h-fit p-2 md:px-10 pt-35 bg-dark-violet flex flex-col">
     <h1 class="text-white font-hanson text-5xl text-center">Book a <span class="text-gold">Class</span></h1>
 
+    @if (finalizing_booking) {
+        <app-ticket-overlay (close)="finalizing_booking = false" (book)="payment($event)"></app-ticket-overlay>
+    }
+
     <div class="form mt-15">
         <div class="flex items-center justify-between lg:flex-row flex-col">
             <div class="flex lg:flex-row flex-col lg:w-fit w-full">
@@ -102,7 +106,7 @@
         <h4 class="font-lexend text-gold text-2xl uppercase lg:mr-10 w-full lg:w-fit font-bold lg:text-left text-center ">{{selected_schedules.length}} Sessions Selected</h4>
         <button 
         class="bg-white text-dark-violet text-xl p-2 w-65 font-eurostile rounded-full font-bold lg:mx-0 mx-auto lg:mt-0 mt-5 cursor-pointer"
-        (click)="payment()"
+        (click)="finalizing_booking = true"
         >Proceed to Payment</button>
     </div>
 </div>
