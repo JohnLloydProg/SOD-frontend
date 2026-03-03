@@ -15,17 +15,23 @@ export class TicketOverlay {
   protected state = inject(AppState);
   
   tickets = signal<Ticket[]>([]);   
-  selected_ticket:number = -1;
+  selected_ticket:Ticket|null = null;
   hovered_ticket:number = -1;
 
   @Output() close = new EventEmitter<void>();
-  @Output() book = new EventEmitter<number>();
+  @Output() book = new EventEmitter<Ticket>();
 
   ngOnInit(): void {
     this.service.get_tickets(this.state.user()?.authToken!).then(tickets=> this.tickets.set(tickets));
   }
 
-  is_hovered(ticket_id:number):boolean {
-    return ticket_id == this.hovered_ticket || ticket_id == this.selected_ticket;
+  is_hovered(ticket:Ticket):boolean {
+    return ticket.id == this.hovered_ticket || ticket == this.selected_ticket;
+  }
+
+  enroll() {
+    if(this.selected_ticket){
+      this.book.emit(this.selected_ticket);
+    }
   }
 }

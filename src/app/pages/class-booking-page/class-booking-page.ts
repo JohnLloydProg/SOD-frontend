@@ -104,9 +104,13 @@ export class ClassBookingPage implements OnInit {
     }
   }
 
-  payment(ticket_id:number) {
-    console.log(this.selected_schedules, ticket_id, this.state.user()?.authToken!);
-    this.lesson_service.book_enrollment(this.selected_schedules, ticket_id, this.state.user()?.authToken!).then(response =>
+  payment(ticket:Ticket) {
+    if (this.selected_schedules.length > ticket.package.number_of_sessions - ticket.used_sessions) {
+      alert(`You have selected ${this.selected_schedules.length} sessions, but your ticket only has ${ticket.package.number_of_sessions - ticket.used_sessions} remaining. Please select fewer sessions or purchase a new ticket.`);
+      return;
+    }
+
+    this.lesson_service.book_enrollment(this.selected_schedules, ticket.id, this.state.user()?.authToken!).then(response =>
       this.router.navigate(['/'])
     );
   }

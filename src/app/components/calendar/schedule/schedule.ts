@@ -20,6 +20,15 @@ export class Schedule {
   @Output() select = new EventEmitter<ScheduleBooking>();
 
   clicked() {
+    if (this.dayPassed()) return;
     this.select.emit({date:this.date(), schedule:this.class()});
+  }
+
+  dayPassed():boolean {
+    const now = new Date();
+    const classDateTime = new Date(this.date());
+    const [hours, minutes] = this.class().start_time.split(':').map(Number);
+    classDateTime.setHours(hours, minutes, 0, 0);
+    return classDateTime < now;
   }
 }
