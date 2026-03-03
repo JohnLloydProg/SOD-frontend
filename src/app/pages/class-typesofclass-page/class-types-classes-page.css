@@ -1,0 +1,34 @@
+.hero-section {
+    background-color: gray;
+}
+
+.story .overlay.scrolled {
+    left: 0;
+}
+
+.overlay img.scrolled {
+    opacity: 100%;
+}
+
+#story.scrolled {
+    left: 100%;
+    opacity: 0;
+}
+
+#mission.scrolled {
+    left: 0;
+    opacity: 100%;
+}
+
+.line {
+    animation-name: moveline;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 500ms;
+}
+
+@keyframes moveline {
+    from {height: 0%;}
+    to {height: 100%;}
+}
