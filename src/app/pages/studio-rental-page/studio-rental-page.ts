@@ -16,17 +16,10 @@ export class StudioRentalPage implements OnInit{
   @ViewChild('date') date!:ElementRef;
   @ViewChild('startTime') startTime!:ElementRef;
   @ViewChild('endTime') endTime!:ElementRef;
+  @ViewChild('viewMap', {static: false}) map!:ElementRef;
 
   protected rental_service = inject(RentalService);
   protected state = inject(AppState);
-
-  quezon_images = [
-    '/images/studio/quezon/gallery_1.jpg', '/images/studio/quezon/gallery_2.jpg', '/images/studio/quezon/gallery_3.jpg'
-  ]
-  binondo_images = [
-    '/images/studio/binondo/gallery_1.jpg', '/images/studio/binondo/gallery_2.jpg', '/images/studio/binondo/gallery_3.jpg',
-    '/images/studio/binondo/gallery_4.jpg'
-  ]
 
   start_times:string[] = [];
   end_times:string[] = [];
@@ -41,6 +34,7 @@ export class StudioRentalPage implements OnInit{
   branches = signal<Branch[]>([]);
   hovered_branch = signal<number>(-1);
   viewing_branch = signal<Branch|null>(null);
+  viewing_gallery = signal<string[]>([]);
 
   constructor() {
     this.today = new Date();
@@ -157,24 +151,27 @@ export class StudioRentalPage implements OnInit{
 
   currentImageIndex = signal<number>(0);
 
-  get currentGallery(): string[] {
-    const branchName = this.viewing_branch()?.name.toLowerCase() || '';
-    if (branchName.includes('quezon')) return this.quezon_images;
-    if (branchName.includes('binondo')) return this.binondo_images;
-    return [];
+  setBranchView(branch:Branch) {
+    this.viewing_branch.set(branch);
+    this.rental_service.get_branch_images(branch.id).then(images => {
+      this.currentImageIndex.set(0);
+      const imageUrls = images.map(img => img.image);
+      this.viewing_gallery.set(imageUrls);
+      this.map.nativeElement.src = this.viewing_branch()?.google_maps_link;
+    });
   }
 
   nextImage() {
-    this.currentImageIndex.update(i => (i + 1) % this.currentGallery.length);
+    this.currentImageIndex.update(i => (i + 1) % this.viewing_gallery().length);
   }
 
   prevImage() {
-    this.currentImageIndex.update(i => (i - 1 + this.currentGallery.length) % this.currentGallery.length);
+    this.currentImageIndex.update(i => (i - 1 + this.viewing_gallery().length) % this.viewing_gallery().length);
   }
 
   getSlidePosition(index: number): 'center' | 'left' | 'right' | 'hidden' {
   const current = this.currentImageIndex();
-  const total = this.currentGallery.length;
+  const total = this.viewing_gallery().length;
 
   if (index === current) return 'center';
   if (index === (current - 1 + total) % total) return 'left';
