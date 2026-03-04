@@ -19,7 +19,6 @@
                         <ul class="drop-down navigation p-2 font-open-sans text-sm" [ngClass]="{'show':classes_show(), 'scrolled':isScrolled || getCurrentPath().length > 2, 'show-all':show_all()}">
                             <p class="uppercase font-eurostile font-bold text-base xl:hidden block">Classes</p>
                             <a routerLink="/types-classes" fragment="types-classes"><li class="p-0.5 link" (click)="hideAll()">Types of Classes</li></a>
-                            <li class="p-0.5 link">Class Schedule</li>
                             <a routerLink="/" fragment="project-underground"><li class="p-0.5 link" (click)="hideAll()">Project Underground</li></a>
                             <a routerLink="/coaches"><p class="uppercase font-eurostile font-bold text-base xl:hidden block" (click)="hideAll()">Coaches</p></a>
                         </ul>
