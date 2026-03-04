@@ -2,6 +2,9 @@
     <h2 class="font-hanson text-black font-bold text-4xl text-center mt-5">Bookings</h2>
     <div class="flex flex-col w-full h-full overflow-y-auto mt-10">
         <hr class="w-full bg-black rounded-xs h-0.5">
+        @if (enrollments().length == 0) {
+            <p class="text-center text-xl font-lexend mt-5">No bookings yet.</p>
+        }
         @for (enrollment of enrollments(); track $index) {
             <div class="flex my-5 cursor-pointer">
                 <div id="dot" class="w-2.5 h-2.5 border rounded-full mt-1 border-black bg-black"></div>

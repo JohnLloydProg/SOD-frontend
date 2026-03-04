@@ -18,6 +18,14 @@ export class Booking implements OnInit{
 
 
   ngOnInit(): void {
-    this.service.get_enrollments(this.state.user()!.authToken!).then(enrollments => {this.enrollments.set(enrollments); console.log(enrollments);});
+    this.service.get_enrollments(this.state.user()!.authToken!).then(enrollments => {
+      enrollments.sort((a,b) => {
+        const dateA = new Date(a.scheduled_date);
+        const dateB = new Date(b.scheduled_date);
+        return dateB.getTime() - dateA.getTime();
+      });
+      this.enrollments.set(enrollments); 
+      
+    });
   }
 }
