@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Branch } from '../interfaces/branch';
+import { BranchImage } from '../interfaces/branch-image';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,9 @@ export class RentalService {
     }, {headers: new HttpHeaders('').set('Authorization', `Token ${authToken}`)});
     return firstValueFrom(observable);
   }
-  
+
+  async get_branch_images(branch_id:number):Promise<BranchImage[]> {
+    const observable = this.httpClient.get<BranchImage[]>(`${environment.apiURl}/members/branch-images/${branch_id}/`);
+    return firstValueFrom(observable);
+  }
 }

@@ -41,7 +41,7 @@
                         <div class="flex flex-col">
                             <p class="font-lexend text-white text-base text-center mb-1">P {{branch.rate}} / hr</p>
                             <button class="font-eurostile text-white font-bold p-1.5 border border-white rounded-full w-full lg:w-45 bg-transparent cursor-pointer uppercase"
-                            (click)="viewing_branch.set(branch)">View More</button>
+                            (click)="setBranchView(branch)">View More</button>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div class="relative w-full overflow-hidden h-[400px] -mt-10 md:h-[600px] flex items-center justify-center">
                 <div class="relative flex items-center justify-center w-full h-full">
                     
-                    @for (img of currentGallery; track $index) {
+                    @for (img of viewing_gallery(); track $index) {
                         <div class="h-[70vh] overflow-hidden absolute transition-all duration-500 ease-in-out transform flex items-center justify-center"
                             [ngClass]="{
                                 'z-30 scale-100 opacity-100 w-[70%] md:w-[60%] translate-x-0': getSlidePosition($index) === 'center',
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 flex gap-2">
-                    @for (img of currentGallery; track $index) {
+                    @for (img of viewing_gallery(); track $index) {
                         <div class="h-3 w-3 rounded-full transition-all duration-300"
                             [ngClass]="currentImageIndex() === $index ? 'bg-white w-6' : 'border border-white'">
                         </div>
@@ -114,7 +114,7 @@
             <p></p>
 
             <!-- google maps -->
-            <iframe 
+            <iframe #viewMap 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.123!2d120.981!3d14.599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM1JzU2LjQiTiAxMjDCsDU4JzUxLjYiRQ!5e0!3m2!1sen!2sph!4v123456789" 
             class="w-full hue-rotate-[60deg]" 
             height="450" 
