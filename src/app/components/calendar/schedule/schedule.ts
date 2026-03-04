@@ -1,9 +1,10 @@
-import { Component, EventEmitter, inject, input, OnInit, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, OnInit, Output, signal } from '@angular/core';
 import { NgClass } from "@angular/common";
 import { ScheduleBooking } from '../../../interfaces/schedule-booking';
 import { LessonSchedule } from '../../../interfaces/lesson-schedule';
 import { User } from '../../../interfaces/user';
 import { LessonService } from '../../../services/lesson-service';
+import { AppState } from '../../../services/app-state';
 
 @Component({
   selector: 'app-schedule',
@@ -11,21 +12,23 @@ import { LessonService } from '../../../services/lesson-service';
   templateUrl: './schedule.html',
   styleUrl: './schedule.css',
 })
-export class Schedule implements OnInit{
+export class Schedule{
   protected service = inject(LessonService);
+  protected state = inject(AppState);
   class = input.required<LessonSchedule>();
   date = input.required<Date>();
   section_selected = input.required<boolean>();
   schedule_selected = input.required<boolean>();
-  user_id = input<string | null>(null);
-  occupancy = 0;
+  occupancies = signal<string[]>([]);
 
   hovered = signal<boolean>(false);
 
   @Output() select = new EventEmitter<ScheduleBooking>();
 
-  ngOnInit(): void {
-    this.service.get_occupancy(this.class().id, this.date().toISOString()).then(occupancy => this.occupancy = occupancy);
+  constructor() {
+    effect(() => {
+      this.service.get_occupancy(this.class().id, this.date().toISOString()).then(strings => this.occupancies.set(strings));
+    });
   }
 
   clicked() {
@@ -38,6 +41,6 @@ export class Schedule implements OnInit{
     const classDateTime = new Date(this.date());
     const [hours, minutes] = this.class().start_time.split(':').map(Number);
     classDateTime.setHours(hours, minutes, 0, 0);
-    return classDateTime < now || this.occupancy >= this.class().max_students;
+    return classDateTime < now || this.occupancies().length >= this.class().max_students || (this.state.user()?.id !== undefined && this.occupancies().includes(this.state.user()!.id!));
   }
 }
