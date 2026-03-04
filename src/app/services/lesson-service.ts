@@ -53,8 +53,8 @@ export class LessonService {
     return firstValueFrom(observable);
   }
 
-  async get_occupancy(schedule_id:number, date_string:string):Promise<number> {
-    const observable = this.httpClient.get<number>(`${environment.apiURl}/schedules/occupancy/${schedule_id}/${date_string}/`);
+  async get_occupancy(schedule_id:number, date_string:string):Promise<string[]> {
+    const observable = this.httpClient.get<string[]>(`${environment.apiURl}/lessons/schedules/occupancy/${schedule_id}/${date_string}/`);
     return firstValueFrom(observable);
   }
 }
