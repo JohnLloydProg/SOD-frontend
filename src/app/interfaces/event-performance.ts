@@ -1,4 +1,4 @@
-export interface Performance {
+export interface EventPerformance {
     id: number,
     name: string,
     date: Date,

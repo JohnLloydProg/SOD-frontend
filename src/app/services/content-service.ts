@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { firstValueFrom } from 'rxjs';
+import { EventPerformance } from '../interfaces/event-performance';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,8 @@ export class ContentService {
     return firstValueFrom(observable);
   }
 
-  async get_performances():Promise<Performance[]> {
-    const observable = this.httpClient.get<Performance[]>(`${environment.apiURl}/contents/event-profile/`);
+  async get_performances():Promise<EventPerformance[]> {
+    const observable = this.httpClient.get<EventPerformance[]>(`${environment.apiURl}/contents/event-profile/`);
     return firstValueFrom(observable);
   }
 }
