@@ -59,7 +59,7 @@
         <h1 class="font-hanson text-white font-bold text-3xl lg:hidden block md:text-6xl lg:text-left text-center">Rent our <span class="text-gold">Studio</span></h1>
     }@else {
         <div class="flex flex-col w-full lg:ml-10 text-white">
-            <div class="z-50 flex gap-4 items-center cursor-pointer" (click)="viewing_branch.set(null)">
+            <div class="z-50 mb-20 flex gap-4 items-center cursor-pointer" (click)="viewing_branch.set(null)">
                 <img src="/images/back.png" alt="back icon" class="w-5 cursor-pointer">
                 <p class="font-lexend text-base">Back to Branches</p>
             </div>
@@ -86,14 +86,14 @@
                     }
 
                     <button (click)="prevImage()" 
-                        class="flex items-center justify-center absolute left-[15.2%] z-40 bg-black/40 hover:bg-black/70 text-white w-[50px] h-[100px] border border-violet border-r-0 transition-all cursor-pointer">
+                        class="flex items-center justify-center absolute left-[2%] md:left-[13%] lg:left-[15.2%] z-40 bg-black/40 hover:bg-black/70 text-white w-[50px] h-[100px] border border-violet border-r-0 transition-all cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
                     </button>
 
                     <button (click)="nextImage()" 
-                        class="flex items-center justify-center absolute right-[15.2%] z-40 bg-black/40 hover:bg-black/70 text-white w-[50px] h-[100px] border border-violet border-l-0 transition-all cursor-pointer">
+                        class="flex items-center justify-center absolute  right-[2%] md:right-[13%] lg:right-[15.2%] z-40 bg-black/40 hover:bg-black/70 text-white w-[50px] h-[100px] border border-violet border-l-0 transition-all cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
