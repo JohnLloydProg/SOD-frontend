@@ -28,7 +28,7 @@ export class PackagePage implements OnInit{
 
 
   ngOnInit(): void {
-    this.service.get_packages().then(packages => {
+    this.service.get_packages(this.branch.value!).then(packages => {
       this.packages.set(packages);
       this.packages().sort((a, b) => a.number_of_sessions - b.number_of_sessions);
     });
@@ -45,6 +45,13 @@ export class PackagePage implements OnInit{
         } else { 
           console.log(error.message);
         }
+    });
+
+    this.branch.valueChanges.subscribe(value => {
+      this.service.get_packages(this.branch.value!).then(packages => {
+        this.packages.set(packages);
+        this.packages().sort((a, b) => a.number_of_sessions - b.number_of_sessions);
+      });
     });
   }
     
