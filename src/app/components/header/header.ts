@@ -43,7 +43,9 @@ export class Header {
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe(() => {
         this.hideAll();
-        
+      
+        this.drawer_img.set('/images/drawer_icon.png');
+
       });
 
     window.addEventListener('force-login', () => {
