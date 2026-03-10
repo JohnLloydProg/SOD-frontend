@@ -7,6 +7,7 @@ import { Class } from '../interfaces/class';
 import { LessonSchedule } from '../interfaces/lesson-schedule';
 import { ScheduleBooking } from '../interfaces/schedule-booking';
 import { Package } from '../interfaces/package';
+import { Recital } from '../interfaces/recital';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +56,18 @@ export class LessonService {
 
   async get_occupancy(schedule_id:number, date_string:string):Promise<string[]> {
     const observable = this.httpClient.get<string[]>(`${environment.apiURl}/lessons/schedules/occupancy/${schedule_id}/${date_string}/`);
+    return firstValueFrom(observable);
+  }
+
+  async get_recitals(branch_id:number):Promise<Recital[]> {
+    const observable = this.httpClient.get<Recital[]>(`${environment.apiURl}/transactions/recitals/${branch_id}/`);
+    return firstValueFrom(observable);
+  }
+
+  async book_recital(recital_id:number, authToken:string):Promise<string> {
+    const observable = this.httpClient.post<string>(`${environment.apiURl}/transactions/recital-ticket/`, {recital_id:recital_id},
+      {headers : new HttpHeaders('').set('Authorization', `Token ${authToken}`)}
+    );
     return firstValueFrom(observable);
   }
 }

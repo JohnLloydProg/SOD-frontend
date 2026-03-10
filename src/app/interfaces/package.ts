@@ -3,9 +3,6 @@ export interface Package {
     price:number,
     branch: number,
     number_of_sessions:number,
-    special: boolean;
     duration: any;
-    details: string;
-    thumbnail: string;
     name: string;
 }
