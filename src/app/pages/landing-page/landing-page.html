@@ -1,7 +1,7 @@
 <div class="hero-section relative w-full">
 
     <video autoplay [muted]="'muted'" loop class="absolute inset-0 h-screen object-cover w-full">
-        <source src="/videos/intro_background.mp4" type="video/mp4">
+        <source [src]="intro_video" type="video/mp4">
     </video>
 
     <div class="absolute opacity-70 inset-0 bg-linear-to-t bg-black h-full"></div>

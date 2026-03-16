@@ -6,7 +6,7 @@ import { ClassCard } from '../../components/class-card/class-card';
 import { Class } from '../../interfaces/class';
 import { RouterLink } from "@angular/router";
 import { LessonService } from '../../services/lesson-service';
-import { coaches_img, closing_img, environment } from '../../../environments/environment'; 
+import { coaches_img, closing_img, intro_video } from '../../../environments/environment'; 
 @Component({
   selector: 'app-landing-page',
   imports: [StackCarousel, SlideCarousel, ClassCard, RouterLink],
@@ -21,6 +21,7 @@ export class LandingPage implements OnInit {
 
   coaches_img = coaches_img.imageUrl;
   closing_img = closing_img.imageUrl;
+  intro_video = intro_video.vidUrl;
 
   protected contentTransform = signal('translateY(0px)');
   protected lesson_service = inject(LessonService);
