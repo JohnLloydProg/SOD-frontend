@@ -1,6 +1,8 @@
 const fs = require('fs');
+require('dotenv').config();
 
-const content = `export const environment = {
+try {
+  const content = `export const environment = {
   production: true,
   apiURl: '${process.env.API_URL || ''}',
   coachesImg: '${process.env.COACHES_IMG || ''}',
@@ -9,5 +11,8 @@ const content = `export const environment = {
 };
 `;
 
-fs.writeFileSync('src/environments/environment.ts', content);
-console.log('environment.ts generated');
+  fs.writeFileSync('src/environments/environment.ts', content);
+  console.log('environment.ts generated');
+} catch (error) {
+  console.error('Error generating environment.ts:', error);
+}
