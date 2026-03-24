@@ -43,3 +43,21 @@
     font-weight: bold;
 }
 
+
+
+
+
+.scrollable-div {
+  max-height: calc(100vh); /* Set the maximum height of the div, adjust as needed */
+  overflow-y: auto;  /* Allow vertical scrolling */
+}
+
+/* Hide the scrollbar */
+.scrollable-div::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.scrollable-div {
+  scrollbar-width: none;  /* Hide scrollbar in Firefox */
+}

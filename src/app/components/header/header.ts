@@ -1,5 +1,5 @@
 import { NgClass, Location, NgOptimizedImage } from '@angular/common';
-import { Component, effect, HostListener, inject, signal } from '@angular/core';
+import { Component, effect, HostListener, inject, signal, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, NavigationEnd } from '@angular/router';
 import { AppState } from '../../services/app-state';
 import { filter } from 'rxjs/operators';
@@ -8,15 +8,15 @@ import { filter } from 'rxjs/operators';
   selector: 'app-header',
   imports: [NgClass, RouterLink, RouterOutlet],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  styleUrls: ['./header.css'],
 })
-export class Header {
+export class Header implements AfterViewInit {
+  @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
+
   protected state = inject(AppState);
   protected router = inject(Router);
 
-  
   drawer_img = signal('/images/drawer_icon.png');
-  
   profile_img = signal('/images/profile_icon_hollow.png');
   sidebar_show = signal(false);
   isScrolled = false;
@@ -26,6 +26,7 @@ export class Header {
   profile_show = signal(false);
   show_all = signal(false);
   currentUrl: string;
+  scrollThreshold: number = 0; // To store the div's height
 
   constructor(private location: Location) {
     this.currentUrl = this.location.path();
@@ -43,14 +44,19 @@ export class Header {
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe(() => {
         this.hideAll();
-      
         this.drawer_img.set('/images/drawer_icon.png');
-
       });
 
     window.addEventListener('force-login', () => {
       this.profileClicked();
     });
+  }
+
+  // After the view is initialized, set the scrollThreshold to the height of the scrollable div
+  ngAfterViewInit(): void {
+    if (this.scrollableDiv) {
+      this.scrollThreshold = this.scrollableDiv.nativeElement.offsetHeight;
+    }
   }
 
   getCurrentPath(): string {
@@ -62,7 +68,18 @@ export class Header {
     this.isScrolled = window.scrollY > 100;
   }
 
-    
+  // Listen for the scroll event on the scrollable div
+  @HostListener('scroll', ['$event'])
+  onDivScroll(event: any) {
+    const scrollPosition = this.scrollableDiv.nativeElement.scrollTop;
+
+    // Check if the scroll position has passed the threshold (height of the div)
+    if (scrollPosition >= this.scrollThreshold) {
+      event.preventDefault(); // Prevent further scrolling within the div
+      this.scrollableDiv.nativeElement.scrollTop = this.scrollThreshold; // Keep scroll at the threshold height
+    }
+  }
+
   extendHeader() {
     if (this.sidebar_show()) {
       this.router.navigate(['', { outlets: { sidebar: null } }]);
@@ -85,7 +102,6 @@ export class Header {
     this.profile_show.set(false);
   }
 
-
   hideAll() {
     this.show_all.set(false);
     this.classes_show.set(false);
@@ -101,7 +117,6 @@ export class Header {
     } else {
       this.router.navigate(['', { outlets: { sidebar: 'account' } }]);
       this.drawer_img.set('/images/close_sidebar.png');
-
     }
   }
 }
