@@ -119,6 +119,7 @@ export class StudioRentalPage implements OnInit{
   }
 
   selectStartTime(index:string) {
+    this.end_sched.set('none');
     const _index = parseInt(index);
     this.start_index.set(_index);
     const time = this.start_times.at(_index);
