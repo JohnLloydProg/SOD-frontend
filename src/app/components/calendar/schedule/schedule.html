@@ -17,12 +17,12 @@
                 </div>
             </ul>
         </div>
-        <div class="flex mt-1 flex-wrap">
+        <div class="flex flex-col mt-1 flex-wrap">
             @if (full()) {
-                <p class="w-full text-center py-1 px-4 bg-red-300 text-black text-xs rounded-full mx-1">Full</p>
+                <p class="w-full text-center py-1 px-4 bg-red-300 text-black text-xs rounded-full my-1">Full</p>
             }
             @if (joined()) {
-                <p class="w-full text-center py-1 px-4 bg-green-300 text-black text-xs rounded-full mx-1">Joined</p>
+                <p class="w-full text-center py-1 px-4 bg-green-300 text-black text-xs rounded-full my-1">Joined</p>
             }
         </div>
     </div>
